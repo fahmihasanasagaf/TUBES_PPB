@@ -20,7 +20,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  
+
   assets:
     - assets/images/google.png
     - assets/images/whatsapp.png
@@ -29,3 +29,9 @@ flutter:
     - assets/images/laci meja.jpg
     - assets/images/kursigoyang.jpeg
     - assets/images/kursisantai.jpeg
+    - assets/images/produk1.jpg
+    - assets/images/produk2.jpg
+    - assets/images/produk3.jpg
+    - assets/images/produk4.jpg
+    - assets/images/produk5.jpg
+    - assets/images/produk6.jpg

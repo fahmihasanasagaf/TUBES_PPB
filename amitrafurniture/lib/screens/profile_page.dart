@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'customer_service_page.dart';
+import 'beli_lagi_page.dart';
+import 'favorit_saya_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -31,7 +33,7 @@ class ProfilePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // PESANAN SAYA SECTION
+              // ================= PESANAN SAYA =================
               const Padding(
                 padding: EdgeInsets.only(left: 8, bottom: 8),
                 child: Text(
@@ -83,7 +85,7 @@ class ProfilePage extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // AKTIVITAS SAYA SECTION
+              // ================= AKTIVITAS SAYA =================
               const Padding(
                 padding: EdgeInsets.only(left: 8, bottom: 8),
                 child: Text(
@@ -102,16 +104,26 @@ class ProfilePage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildSimpleItem('Beli Lagi'),
+                    _buildSimpleItem('Beli Lagi', onTap: () {
+                      Navigator.push(
+                        context,
+                        _createRoute(const BeliLagiPage()),
+                      );
+                    }),
                     const Divider(height: 1, indent: 16, endIndent: 16),
-                    _buildSimpleItem('Favorit Saya'),
+                    _buildSimpleItem('Favorit Saya', onTap: () {
+                      Navigator.push(
+                        context,
+                        _createRoute(const FavoritSayaPage()),
+                      );
+                    }),
                   ],
                 ),
               ),
 
               const SizedBox(height: 24),
 
-              // BANTUAN SECTION
+              // ================= BANTUAN =================
               const Padding(
                 padding: EdgeInsets.only(left: 8, bottom: 8),
                 child: Text(
@@ -131,16 +143,14 @@ class ProfilePage extends StatelessWidget {
                 child: _buildSimpleItem('Customer Service', onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const CustomerServicePage(),
-                    ),
+                    _createRoute(const CustomerServicePage()),
                   );
                 }),
               ),
 
               const SizedBox(height: 24),
 
-              // UBAH PROFIL SECTION
+              // ================= UBAH PROFIL =================
               const Padding(
                 padding: EdgeInsets.only(left: 8, bottom: 8),
                 child: Text(
@@ -170,7 +180,7 @@ class ProfilePage extends StatelessWidget {
 
               const SizedBox(height: 32),
 
-              // SIMPAN BUTTON
+              // ================= SIMPAN BUTTON =================
               Container(
                 width: double.infinity,
                 height: 50,
@@ -210,6 +220,8 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
+  // =================== WIDGET TAMBAHAN ===================
+
   Widget _buildOrderStatus(String text, IconData icon, bool isBold) {
     return Column(
       children: [
@@ -220,11 +232,7 @@ class ProfilePage extends StatelessWidget {
             color: const Color(0xFFE3F2FD),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Icon(
-            icon,
-            color: Colors.blue,
-            size: 20,
-          ),
+          child: Icon(icon, color: Colors.blue, size: 20),
         ),
         const SizedBox(height: 8),
         Text(
@@ -267,11 +275,25 @@ class ProfilePage extends StatelessWidget {
           fontWeight: FontWeight.w500,
         ),
       ),
-      trailing: const Icon(
+      trailing: const Icon( 
         Icons.arrow_forward_ios,
         size: 16,
         color: Colors.black54,
       ),
+    );
+  }
+
+  // Animasi transisi halaman (slide ke kanan)
+  Route _createRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+        final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        return SlideTransition(position: animation.drive(tween), child: child);
+      },
     );
   }
 }

@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedCategoryIndex = 0;
-  final List<String> categories = ['Semua', 'Populer', 'Kursi', 'Meja'];
+  final List<String> categories = ['Semua', 'Populer', 'Rekomendasi'];
 
   final List<Map<String, dynamic>> categoryItems = [
     {'icon': Icons.chair, 'name': 'Kursi'},
@@ -34,11 +34,28 @@ class _HomePageState extends State<HomePage> {
   // Add bottom navigation index
   int _currentBottomNavIndex = 0;
 
+  // Method to filter products based on selected category
+  List<Product> _getFilteredProducts() {
+    final List<Product> allProducts = ProductData.getAllProducts();
+    
+    switch (_selectedCategoryIndex) {
+      case 0: // Semua
+        return allProducts;
+      case 1: // Populer
+        // Filter produk populer (contoh: produk dengan harga tertentu atau Anda bisa menambah field isPopular di Product model)
+        return allProducts.where((product) => 
+          product.name.contains('Kursi') || product.name.contains('Meja')
+        ).toList();
+      case 2: // Rekomendasi
+        // Filter produk rekomendasi (contoh: produk terbaru atau dengan rating tinggi)
+        return allProducts.take(4).toList(); // Ambil 4 produk pertama sebagai rekomendasi
+      default:
+        return allProducts;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Get products from ProductData
-    final List<Product> products = ProductData.getAllProducts();
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -57,7 +74,7 @@ class _HomePageState extends State<HomePage> {
             _buildCategoryFilter(),
 
             // Product grid
-            Expanded(child: _buildProductsGrid(products)),
+            Expanded(child: _buildProductsGrid()),
           ],
         ),
       ),
@@ -292,7 +309,28 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildProductsGrid(List<Product> products) {
+  Widget _buildProductsGrid() {
+    final filteredProducts = _getFilteredProducts();
+    
+    if (filteredProducts.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.inventory_2_outlined, size: 64, color: Colors.grey[400]),
+            const SizedBox(height: 16),
+            Text(
+              'Tidak ada produk dalam kategori ini',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: GridView.builder(
@@ -302,9 +340,9 @@ class _HomePageState extends State<HomePage> {
           mainAxisSpacing: 12,
           childAspectRatio: 0.72,
         ),
-        itemCount: products.length,
+        itemCount: filteredProducts.length,
         itemBuilder: (context, index) {
-          return _buildProductCard(products[index]);
+          return _buildProductCard(filteredProducts[index]);
         },
       ),
     );
@@ -442,7 +480,7 @@ class _HomePageState extends State<HomePage> {
             // Cart navigation
             Navigator.pushNamed(context, '/cart');
           } else if (index == 3) {
-            // Notifications navigation - TAMBAHKAN INI
+            // Notifications navigation
             Navigator.push(
               context,
               MaterialPageRoute(
