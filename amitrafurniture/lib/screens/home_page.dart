@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/product_model.dart';
 import '../data/product_data.dart';
 import 'product_detail_screen.dart';
+import 'notification_page.dart';
 
 // Color palette inspired by the Figma "Frame"
 const Color kLightBlue = Color(0xFFACD2FF);
@@ -22,7 +23,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedCategoryIndex = 0;
   final List<String> categories = ['Semua', 'Populer', 'Kursi', 'Meja'];
-  
+
   final List<Map<String, dynamic>> categoryItems = [
     {'icon': Icons.chair, 'name': 'Kursi'},
     {'icon': Icons.weekend, 'name': 'Sofa'},
@@ -71,12 +72,6 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: kPrimaryText, size: 28),
-            onPressed: () {
-              _showSnackBar(context, 'Menu diklik');
-            },
-          ),
           Expanded(
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 12),
@@ -99,12 +94,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings, color: kPrimaryText, size: 24),
-            onPressed: () {
-              _showSnackBar(context, 'Pengaturan diklik');
-            },
           ),
         ],
       ),
@@ -370,7 +359,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              
+
               // Product Info
               Padding(
                 padding: const EdgeInsets.all(10),
@@ -427,9 +416,9 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildBottomNavItem(Icons.home_filled, 'Home', 0),
-              _buildBottomNavItem(Icons.favorite_border, 'Wishlist', 1),
               _buildBottomNavItem(Icons.shopping_cart_outlined, 'Cart', 2),
-              _buildBottomNavItem(Icons.person_outline, 'Profile', 3),
+              _buildBottomNavItem(Icons.notifications_none, 'Notifications', 3),
+              _buildBottomNavItem(Icons.person_outline, 'Profile', 4),
             ],
           ),
         ),
@@ -439,12 +428,29 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildBottomNavItem(IconData icon, String label, int index) {
     final isSelected = _currentBottomNavIndex == index;
-    
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          if (index == 3) {
+          setState(() {
+            _currentBottomNavIndex = index;
+          });
+
+          // Navigate based on index
+          if (index == 2) {
+            // Cart navigation
+            Navigator.pushNamed(context, '/cart');
+          } else if (index == 3) {
+            // Notifications navigation - TAMBAHKAN INI
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NotificationPage(),
+              ),
+            );
+          } else if (index == 4) {
+            // Profile navigation
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -452,9 +458,7 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           } else {
-            setState(() {
-              _currentBottomNavIndex = index;
-            });
+            // Other navigation items
             _showSnackBar(context, '$label diklik');
           }
         },
