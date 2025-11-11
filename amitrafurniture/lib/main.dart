@@ -3,6 +3,8 @@ import 'screens/welcome_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_page.dart';
 import 'screens/verify_page.dart';
+import 'screens/home_page.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -22,11 +24,13 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const WelcomeScreen(),
-        '/login': (context) => const LoginScreen(),
-        '/register': (context) => const RegisterPage(),
-        '/verify': (context) => const VerifyPage(),
-      },
+  '/': (context) => const WelcomeScreen(),
+  '/login': (context) => const LoginScreen(),
+  '/register': (context) => const RegisterPage(),
+  '/verify': (context) => const VerifyPage(),
+  '/home': (context) => const HomePage(),
+},
+
     );
   }
 }

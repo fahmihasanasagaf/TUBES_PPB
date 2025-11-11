@@ -6,7 +6,7 @@ class VerifyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  const Color.fromRGBO(208, 225, 255, 1),
+      backgroundColor: const Color(0xFFD0E2FF),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
@@ -53,7 +53,9 @@ class VerifyPage extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 50)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/home');
+                },
                 child: const Text('Verifikasi',
                     style: TextStyle(fontSize: 18, color: Colors.black)),
               ),

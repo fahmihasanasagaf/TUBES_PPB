@@ -9,6 +9,7 @@ class LoginScreen extends StatelessWidget {
     final passwordController = TextEditingController();
 
     return Scaffold(
+      backgroundColor: const Color(0xFFD0E2FF),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
@@ -77,7 +78,9 @@ class LoginScreen extends StatelessWidget {
                         horizontal: 100, vertical: 15),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12))),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/home');
+                },
                 child: const Text(
                   'Login',
                   style: TextStyle(
@@ -93,9 +96,9 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('assets/images/google.png', height: 35),
+                  Image.asset('assets/images/google.png', height: 35, errorBuilder: (context, error, stackTrace) => const Icon(Icons.error)),
                   const SizedBox(width: 40),
-                  Image.asset('assets/images/whatsapp.png', height: 40),
+                  Image.asset('assets/images/whatsapp.png', height: 40, errorBuilder: (context, error, stackTrace) => const Icon(Icons.error)),
                 ],
               ),
               const SizedBox(height: 30),
