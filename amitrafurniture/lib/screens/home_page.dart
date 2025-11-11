@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../models/product_model.dart';
+import '../data/product_data.dart';
+import 'product_detail_screen.dart';
 
 // Color palette inspired by the Figma "Frame"
 const Color kLightBlue = Color(0xFFACD2FF);
@@ -26,34 +29,14 @@ class _HomePageState extends State<HomePage> {
     {'icon': Icons.bed, 'name': 'Ranjang'},
   ];
 
-  final List<Map<String, dynamic>> products = [
-    {
-      'name': 'Laci Meja Kayu',
-      'price': 'Rp.500.000',
-      'image': 'assets/images/laci_meja.png',
-    },
-    {
-      'name': 'Kursi Kayu',
-      'price': 'Rp.400.000',
-      'image': 'assets/images/kursi_kayu.png',
-    },
-    {
-      'name': 'Sofa',
-      'price': 'Rp.5.000.000',
-      'image': 'assets/images/sofa.png',
-    },
-    {
-      'name': 'GrandWood Storage Bed',
-      'price': 'Rp.7.000.000',
-      'image': 'assets/images/ranjang.png',
-    },
-  ];
-
   // Add bottom navigation index
   int _currentBottomNavIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    // Get products from ProductData
+    final List<Product> products = ProductData.getAllProducts();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -72,7 +55,7 @@ class _HomePageState extends State<HomePage> {
             _buildCategoryFilter(),
 
             // Product grid
-            Expanded(child: _buildProductsGrid()),
+            Expanded(child: _buildProductsGrid(products)),
           ],
         ),
       ),
@@ -305,7 +288,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildProductsGrid() {
+  Widget _buildProductsGrid(List<Product> products) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: GridView.builder(
@@ -323,7 +306,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildProductCard(Map<String, dynamic> product) {
+  Widget _buildProductCard(Product product) {
     return Card(
       elevation: 2,
       color: Colors.white,
@@ -333,7 +316,13 @@ class _HomePageState extends State<HomePage> {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () {
-          _showSnackBar(context, '${product['name']} diklik');
+          // Navigate to Product Detail Screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductDetailScreen(product: product),
+            ),
+          );
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -351,7 +340,7 @@ class _HomePageState extends State<HomePage> {
               ),
               child: Center(
                 child: Image.asset(
-                  product['image'],
+                  product.image,
                   width: 80,
                   height: 80,
                   fit: BoxFit.contain,
@@ -373,7 +362,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product['name'],
+                    product.name,
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -384,7 +373,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    product['price'],
+                    product.price,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
