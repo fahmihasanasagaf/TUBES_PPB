@@ -1,3 +1,4 @@
+import 'package:amitrafurniture/screens/kursi_screen.dart';
 import 'package:amitrafurniture/screens/profile_page.dart';
 import 'package:flutter/material.dart';
 import '../models/product_model.dart';
@@ -22,7 +23,6 @@ class _HomePageState extends State<HomePage> {
   int _selectedCategoryIndex = 0;
   final List<String> categories = ['Semua', 'Populer', 'Kursi', 'Meja'];
   
-  // Add category icons and names
   final List<Map<String, dynamic>> categoryItems = [
     {'icon': Icons.chair, 'name': 'Kursi'},
     {'icon': Icons.weekend, 'name': 'Sofa'},
@@ -127,33 +127,47 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCategoryItem(IconData icon, String name) {
-    return GestureDetector(
-      onTap: () {
-        _showSnackBar(context, '$name diklik');
-      },
-      child: Column(
-        children: [
-          Container(
-            width: 60,
-            height: 60,
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: kLightBlue,
-              borderRadius: BorderRadius.circular(12),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          print('Kategori $name diklik'); // Debug print
+          if (name == 'Kursi') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const KursiScreen(),
+              ),
+            );
+          } else {
+            _showSnackBar(context, '$name diklik');
+          }
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Column(
+          children: [
+            Container(
+              width: 60,
+              height: 60,
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: kLightBlue,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: kPrimaryText, size: 28),
             ),
-            child: Icon(icon, color: kPrimaryText, size: 28),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            name,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: kPrimaryText,
+            const SizedBox(height: 4),
+            Text(
+              name,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: kPrimaryText,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -308,16 +322,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildProductCard(Product product) {
-    return Card(
-      elevation: 2,
-      color: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+    return Material(
+      color: Colors.transparent,
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
         onTap: () {
-          // Navigate to Product Detail Screen
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -325,66 +333,74 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Product Image
-            Container(
-              height: 120,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.grey[50],
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  topRight: Radius.circular(12),
+        borderRadius: BorderRadius.circular(12),
+        child: Card(
+          elevation: 2,
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Product Image
+              Container(
+                height: 120,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.grey[50],
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12),
+                  ),
+                ),
+                child: Center(
+                  child: Image.asset(
+                    product.image,
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(
+                        Icons.chair_outlined,
+                        size: 50,
+                        color: Colors.grey[400],
+                      );
+                    },
+                  ),
                 ),
               ),
-              child: Center(
-                child: Image.asset(
-                  product.image,
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Icon(
-                      Icons.chair_outlined,
-                      size: 50,
-                      color: Colors.grey[400],
-                    );
-                  },
+              
+              // Product Info
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.name,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: kPrimaryText,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      product.price,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: kPriceBlue,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            
-            // Product Info
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product.name,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: kPrimaryText,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    product.price,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: kPriceBlue,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -421,48 +437,49 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // Di bagian _buildBottomNavItem di home_page.dart, update menjadi:
-Widget _buildBottomNavItem(IconData icon, String label, int index) {
-  final isSelected = _currentBottomNavIndex == index;
-  
-  return GestureDetector(
-    onTap: () {
-      if (index == 3) {
-        // Navigate to Profile Page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ProfilePage(),
-          ),
-        );
-      } else {
-        setState(() {
-          _currentBottomNavIndex = index;
-        });
-        _showSnackBar(context, '$label diklik');
-      }
-    },
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          color: isSelected ? const Color(0xFF2196F3) : kPrimaryText,
-          size: 24,
+  Widget _buildBottomNavItem(IconData icon, String label, int index) {
+    final isSelected = _currentBottomNavIndex == index;
+    
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProfilePage(),
+              ),
+            );
+          } else {
+            setState(() {
+              _currentBottomNavIndex = index;
+            });
+            _showSnackBar(context, '$label diklik');
+          }
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              color: isSelected ? const Color(0xFF2196F3) : kPrimaryText,
+              size: 24,
+            ),
+            const SizedBox(height: 2),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 10,
+                color: isSelected ? const Color(0xFF2196F3) : kPrimaryText,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 2),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 10,
-            color: isSelected ? const Color(0xFF2196F3) : kPrimaryText,
-            fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-          ),
-        ),
-      ],
-    ),
-  );
-}
+      ),
+    );
+  }
 
   void _showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
