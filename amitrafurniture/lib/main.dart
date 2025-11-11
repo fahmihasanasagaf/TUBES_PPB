@@ -4,6 +4,8 @@ import 'screens/login_screen.dart';
 import 'screens/register_page.dart';
 import 'screens/verify_page.dart';
 import 'screens/home_page.dart';
+import 'screens/profile_page.dart';
+import 'screens/customer_service_page.dart';
 
 
 void main() {
@@ -29,6 +31,8 @@ class MyApp extends StatelessWidget {
   '/register': (context) => const RegisterPage(),
   '/verify': (context) => const VerifyPage(),
   '/home': (context) => const HomePage(),
+  '/profile': (context) => const ProfilePage(),
+  '/customer_service': (context) => const CustomerServicePage(),
 },
 
     );

@@ -1,3 +1,4 @@
+import 'package:amitrafurniture/screens/profile_page.dart';
 import 'package:flutter/material.dart';
 import '../models/product_model.dart';
 import '../data/product_data.dart';
@@ -420,37 +421,48 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildBottomNavItem(IconData icon, String label, int index) {
-    final isSelected = _currentBottomNavIndex == index;
-    
-    return GestureDetector(
-      onTap: () {
+  // Di bagian _buildBottomNavItem di home_page.dart, update menjadi:
+Widget _buildBottomNavItem(IconData icon, String label, int index) {
+  final isSelected = _currentBottomNavIndex == index;
+  
+  return GestureDetector(
+    onTap: () {
+      if (index == 3) {
+        // Navigate to Profile Page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ProfilePage(),
+          ),
+        );
+      } else {
         setState(() {
           _currentBottomNavIndex = index;
         });
         _showSnackBar(context, '$label diklik');
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
+      }
+    },
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          icon,
+          color: isSelected ? const Color(0xFF2196F3) : kPrimaryText,
+          size: 24,
+        ),
+        const SizedBox(height: 2),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 10,
             color: isSelected ? const Color(0xFF2196F3) : kPrimaryText,
-            size: 24,
+            fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
           ),
-          const SizedBox(height: 2),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 10,
-              color: isSelected ? const Color(0xFF2196F3) : kPrimaryText,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
 
   void _showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
