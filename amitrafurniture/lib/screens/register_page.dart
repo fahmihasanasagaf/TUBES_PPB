@@ -7,9 +7,36 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderStateMixin {
   bool agree = false;
   final _formKey = GlobalKey<FormState>();
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.9).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _navigateToHome(BuildContext context) {
+    _animationController.forward().then((_) {
+      _animationController.reverse();
+      Navigator.pushNamed(context, '/home');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +93,77 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset('assets/images/google.png', height: 40, errorBuilder: (context, error, stackTrace) => const Icon(Icons.error)),
+                    // Google Button dengan animasi
+                    AnimatedBuilder(
+                      animation: _scaleAnimation,
+                      builder: (context, child) {
+                        return Transform.scale(
+                          scale: _scaleAnimation.value,
+                          child: child,
+                        );
+                      },
+                      child: GestureDetector(
+                        onTapDown: (_) => _animationController.forward(),
+                        onTapUp: (_) => _navigateToHome(context),
+                        onTapCancel: () => _animationController.reverse(),
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Image.asset(
+                            'assets/images/google.png', 
+                            height: 35,
+                            errorBuilder: (context, error, stackTrace) => 
+                              const Icon(Icons.g_mobiledata, size: 35),
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(width: 20),
-                    Image.asset('assets/images/whatsapp.png', height: 40, errorBuilder: (context, error, stackTrace) => const Icon(Icons.error)),
+                    // WhatsApp Button dengan animasi
+                    AnimatedBuilder(
+                      animation: _scaleAnimation,
+                      builder: (context, child) {
+                        return Transform.scale(
+                          scale: _scaleAnimation.value,
+                          child: child,
+                        );
+                      },
+                      child: GestureDetector(
+                        onTapDown: (_) => _animationController.forward(),
+                        onTapUp: (_) => _navigateToHome(context),
+                        onTapCancel: () => _animationController.reverse(),
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Image.asset(
+                            'assets/images/whatsapp.png', 
+                            height: 35,
+                            errorBuilder: (context, error, stackTrace) => 
+                              const Icon(Icons.chat, size: 35),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 15),
