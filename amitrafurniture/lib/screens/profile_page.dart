@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'customer_service_page.dart';
-import 'beli_lagi_page.dart';
-import 'favorit_saya_page.dart';
+import 'order_history_page.dart';
+import 'beli_lagi_page.dart'; // Import halaman BeliLagiPage
+import 'favorit_saya_page.dart'; // Import halaman FavoritSayaPage
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
+
+  void _navigateToOrderHistory(BuildContext context, int initialTab) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OrderHistoryPage(initialTab: initialTab),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +43,7 @@ class ProfilePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ================= PESANAN SAYA =================
+              // PESANAN SAYA SECTION
               const Padding(
                 padding: EdgeInsets.only(left: 8, bottom: 8),
                 child: Text(
@@ -57,10 +67,34 @@ class ProfilePage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          _buildOrderStatus('Belum Bayar', Icons.payment, true),
-                          _buildOrderStatus('Dikemas', Icons.inventory_2, false),
-                          _buildOrderStatus('Dikirim', Icons.local_shipping, false),
-                          _buildOrderStatus('Diberi Penilaian', Icons.star_border, false),
+                          // Belum Bayar - bisa diklik
+                          GestureDetector(
+                            onTap: () {
+                              _navigateToOrderHistory(context, 0);
+                            },
+                            child: _buildOrderStatus('Belum Bayar', Icons.payment, true),
+                          ),
+                          // Dikemas - bisa diklik
+                          GestureDetector(
+                            onTap: () {
+                              _navigateToOrderHistory(context, 1);
+                            },
+                            child: _buildOrderStatus('Dikemas', Icons.inventory_2, false),
+                          ),
+                          // Dikirim - bisa diklik
+                          GestureDetector(
+                            onTap: () {
+                              _navigateToOrderHistory(context, 2);
+                            },
+                            child: _buildOrderStatus('Dikirim', Icons.local_shipping, false),
+                          ),
+                          // Diberi Penilaian - bisa diklik
+                          GestureDetector(
+                            onTap: () {
+                              _navigateToOrderHistory(context, 3);
+                            },
+                            child: _buildOrderStatus('Diberi Penilaian', Icons.star_border, false),
+                          ),
                         ],
                       ),
                     ),
@@ -68,13 +102,23 @@ class ProfilePage extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: const Center(
-                        child: Text(
-                          'Lihat Riwayat Pesanan',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const OrderHistoryPage(),
+                            ),
+                          );
+                        },
+                        child: const Center(
+                          child: Text(
+                            'Lihat Riwayat Pesanan',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87,
+                            ),
                           ),
                         ),
                       ),
@@ -85,7 +129,7 @@ class ProfilePage extends StatelessWidget {
 
               const SizedBox(height: 24),
 
-              // ================= AKTIVITAS SAYA =================
+              // AKTIVITAS SAYA SECTION
               const Padding(
                 padding: EdgeInsets.only(left: 8, bottom: 8),
                 child: Text(
@@ -104,26 +148,38 @@ class ProfilePage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildSimpleItem('Beli Lagi', onTap: () {
-                      Navigator.push(
-                        context,
-                        _createRoute(const BeliLagiPage()),
-                      );
-                    }),
+                    // Beli Lagi - bisa diklik
+                    _buildClickableItem(
+                      'Beli Lagi',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BeliLagiPage(),
+                          ),
+                        );
+                      },
+                    ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
-                    _buildSimpleItem('Favorit Saya', onTap: () {
-                      Navigator.push(
-                        context,
-                        _createRoute(const FavoritSayaPage()),
-                      );
-                    }),
+                    // Favorit Saya - bisa diklik
+                    _buildClickableItem(
+                      'Favorit Saya',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FavoritSayaPage(),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
 
               const SizedBox(height: 24),
 
-              // ================= BANTUAN =================
+              // BANTUAN SECTION
               const Padding(
                 padding: EdgeInsets.only(left: 8, bottom: 8),
                 child: Text(
@@ -140,17 +196,22 @@ class ProfilePage extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: _buildSimpleItem('Customer Service', onTap: () {
-                  Navigator.push(
-                    context,
-                    _createRoute(const CustomerServicePage()),
-                  );
-                }),
+                child: _buildClickableItem(
+                  'Customer Service',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CustomerServicePage(),
+                      ),
+                    );
+                  },
+                ),
               ),
 
               const SizedBox(height: 24),
 
-              // ================= UBAH PROFIL =================
+              // UBAH PROFIL SECTION
               const Padding(
                 padding: EdgeInsets.only(left: 8, bottom: 8),
                 child: Text(
@@ -169,18 +230,36 @@ class ProfilePage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildProfileItem('Nama fahmi'),
+                    // Nama - bisa diklik
+                    _buildClickableItem(
+                      'Nama fahmi',
+                      onTap: () {
+                        _showEditDialog(context, 'Nama', 'fahmi');
+                      },
+                    ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
-                    _buildProfileItem('No.Handphone ******91'),
+                    // No. Handphone - bisa diklik
+                    _buildClickableItem(
+                      'No.Handphone ******91',
+                      onTap: () {
+                        _showEditDialog(context, 'No. Handphone', '081234567891');
+                      },
+                    ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
-                    _buildProfileItem('Email s****2@gmail.com'),
+                    // Email - bisa diklik
+                    _buildClickableItem(
+                      'Email s****2@gmail.com',
+                      onTap: () {
+                        _showEditDialog(context, 'Email', 's****2@gmail.com');
+                      },
+                    ),
                   ],
                 ),
               ),
 
               const SizedBox(height: 32),
 
-              // ================= SIMPAN BUTTON =================
+              // SIMPAN BUTTON
               Container(
                 width: double.infinity,
                 height: 50,
@@ -220,8 +299,6 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  // =================== WIDGET TAMBAHAN ===================
-
   Widget _buildOrderStatus(String text, IconData icon, bool isBold) {
     return Column(
       children: [
@@ -232,7 +309,11 @@ class ProfilePage extends StatelessWidget {
             color: const Color(0xFFE3F2FD),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Icon(icon, color: Colors.blue, size: 20),
+          child: Icon(
+            icon,
+            color: Colors.blue,
+            size: 20,
+          ),
         ),
         const SizedBox(height: 8),
         Text(
@@ -248,7 +329,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildSimpleItem(String text, {VoidCallback? onTap}) {
+  Widget _buildClickableItem(String text, {VoidCallback? onTap}) {
     return ListTile(
       title: Text(
         text,
@@ -266,33 +347,45 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileItem(String text) {
-    return ListTile(
-      title: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      trailing: const Icon( 
-        Icons.arrow_forward_ios,
-        size: 16,
-        color: Colors.black54,
-      ),
-    );
-  }
-
-  // Animasi transisi halaman (slide ke kanan)
-  Route _createRoute(Widget page) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0);
-        const end = Offset.zero;
-        const curve = Curves.ease;
-        final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        return SlideTransition(position: animation.drive(tween), child: child);
+  void _showEditDialog(BuildContext context, String field, String currentValue) {
+    TextEditingController controller = TextEditingController(text: currentValue);
+    
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit $field'),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: 'Masukkan $field baru',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Batal'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Simpan perubahan
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('$field berhasil diubah'),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+                Navigator.of(context).pop();
+              },
+              child: const Text('Simpan'),
+            ),
+          ],
+        );
       },
     );
   }

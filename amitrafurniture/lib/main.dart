@@ -8,6 +8,8 @@ import 'screens/profile_page.dart';
 import 'screens/customer_service_page.dart';
 import 'screens/cart_screen.dart';
 import 'screens/notification_page.dart';
+import 'screens/order_history_page.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -36,6 +38,7 @@ class MyApp extends StatelessWidget {
         '/customer_service': (context) => const CustomerServicePage(),
         '/cart': (context) => const CartScreen(),
         '/notification': (context) => NotificationPage(),
+        '/order_history': (context) => const OrderHistoryPage(),
       },
     );
   }
