@@ -34,7 +34,19 @@ class _HomePageState extends State<HomePage> {
   // Add bottom navigation index
   int _currentBottomNavIndex = 0;
 
-  // Method to filter products based on selected category
+  // Tambahkan map untuk menyimpan stok produk (simulasi) - UPDATED
+  final Map<String, int> productStock = {
+    'Kursi Goyang': 8,
+    'Kursi Santai': 15,
+    'Ranjang Susun Tingkat': 4,
+    'Ranjang Modern': 6,
+    'Laci Modern Retro': 7,
+    'Buffet Jati Laci': 3,
+    'Sofa Metal Feet': 5,
+    'Lorenz Seater Sofa': 2,
+  };
+
+  // Method to filter products based on selected category - UPDATED
   List<Product> _getFilteredProducts() {
     final List<Product> allProducts = ProductData.getAllProducts();
     
@@ -42,13 +54,21 @@ class _HomePageState extends State<HomePage> {
       case 0: // Semua
         return allProducts;
       case 1: // Populer
-        // Filter produk populer (contoh: produk dengan harga tertentu atau Anda bisa menambah field isPopular di Product model)
+        // Filter produk populer: Laci Modern Retro, Lorenz Seater Sofa, Kursi Santai, Buffet Jati Laci
         return allProducts.where((product) => 
-          product.name.contains('Kursi') || product.name.contains('Meja')
+          product.name == 'Laci Modern Retro' ||
+          product.name == 'Lorenz Seater Sofa' ||
+          product.name == 'Kursi Santai' ||
+          product.name == 'Buffet Jati Laci'
         ).toList();
       case 2: // Rekomendasi
-        // Filter produk rekomendasi (contoh: produk terbaru atau dengan rating tinggi)
-        return allProducts.take(4).toList(); // Ambil 4 produk pertama sebagai rekomendasi
+        // Filter produk rekomendasi: Ranjang Modern, Kursi Santai, Laci Modern Retro, Lorenz Seater Sofa
+        return allProducts.where((product) => 
+          product.name == 'Ranjang Modern' ||
+          product.name == 'Kursi Santai' ||
+          product.name == 'Laci Modern Retro' ||
+          product.name == 'Lorenz Seater Sofa'
+        ).toList();
       default:
         return allProducts;
     }
@@ -349,6 +369,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildProductCard(Product product) {
+    // Ambil stok produk, default 0 jika tidak ada
+    final stock = productStock[product.name] ?? 0;
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -370,9 +393,9 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Product Image
+              // Product Image - DIPERBESAR
               Container(
-                height: 120,
+                height: 140, // Dinaikkan dari 120
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.grey[50],
@@ -384,13 +407,13 @@ class _HomePageState extends State<HomePage> {
                 child: Center(
                   child: Image.asset(
                     product.image,
-                    width: 80,
-                    height: 80,
+                    width: 100, // Dinaikkan dari 80
+                    height: 100, // Dinaikkan dari 80
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
                       return Icon(
                         Icons.chair_outlined,
-                        size: 50,
+                        size: 60, // Dinaikkan dari 50
                         color: Colors.grey[400],
                       );
                     },
@@ -421,6 +444,16 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: kPriceBlue,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    // Tampilkan stok
+                    Text(
+                      'Stok: $stock',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: stock > 0 ? Colors.green[700] : Colors.red[700],
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
