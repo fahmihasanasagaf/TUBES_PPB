@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class KursiScreen extends StatelessWidget {
-  const KursiScreen({super.key});
+class RanjangScreen extends StatelessWidget {
+  const RanjangScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class KursiScreen extends StatelessWidget {
                 const SizedBox(width: 16),
                 const Expanded(
                   child: Text(
-                    'KURSI',
+                    'RANJANG',
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -42,78 +42,87 @@ class KursiScreen extends StatelessWidget {
               crossAxisSpacing: 16,
               childAspectRatio: 0.75,
               children: [
-                _buildKursiCard(
+                _buildRanjangCard(
                   context,
-                  'KURSI KAYU JATI',
-                  'Rp.400.000',
-                  'assets/images/products/kursi_kayu_jati.jpg',
+                  'RANJANG MODERN',
+                  'Rp.850.000',
+                  'assets/images/products/ranjang_modern.jpg',
                   {
-                    'name': 'KURSI KAYU JATI',
-                    'price': 'Rp.400.000',
-                    'image': 'assets/images/products/kursi_kayu_jati.jpg',
-                    'description': 'Kursi Kayu Jati Elegan\n\nKursi ini terbuat dari kayu jati berkualitas tinggi yang terkenal akan kekuatan dan ketahanannya terhadap rayap serta cuaca. Desainnya sederhana namun elegan, cocok untuk berbagai ruangan seperti ruang tamu, ruang makan, atau ruang kerja.',
+                    'name': 'RANJANG MODERN',
+                    'price': 'Rp.850.000',
+                    'image': 'assets/images/products/ranjang_modern.jpg',
+                    'description': 'Ranjang dengan desain modern minimalis yang cocok untuk kamar tidur kontemporer. Rangka kayu solid yang kokoh dan tahan lama.\n\nDesain headboard yang elegan memberikan kesan mewah pada kamar tidur. Ukuran queen size yang nyaman untuk 2 orang.\n\nDilengkapi dengan penyangga kasur yang kuat dan stabil.',
                     'specs': [
-                      'Bahan: Kayu Jati Solid',
-                      'Finishing: Natural / Glossy',
-                      'Dimensi: 45 cm (lebar) × 45 cm (panjang) × 85 cm (tinggi)',
-                      'Warna: Cokelat Kayu Natural',
-                      'Kapasitas: Maksimal hingga 100 kg',
+                      'Material: Kayu Solid + MDF',
+                      'Finishing: Duco/Melamine',
+                      'Ukuran: 160 cm x 200 cm (Queen Size)',
+                      'Tinggi Headboard: 120 cm',
+                      'Berat: ±45 kg',
+                      'Warna: Putih, Walnut, Natural',
+                      'Termasuk: Rangka + Headboard',
                     ],
                     'kelebihan': [
-                      'Material kuat dan tahan lama',
-                      'Desain minimalis cocok untuk berbagai interior',
-                      'Permukaan halus dan nyaman saat digunakan',
+                      'Desain modern elegan',
+                      'Rangka sangat kokoh',
+                      'Headboard tinggi nyaman',
+                      'Mudah dirakit',
+                      'Ukuran queen size',
                     ]
                   },
                 ),
-                _buildKursiCard(
+                _buildRanjangCard(
                   context,
-                  'KURSI ROTAN',
+                  'RANJANG SUSUN TINGKAT',
+                  'Rp.1.200.000',
+                  'assets/images/products/ranjang_susun.jpg',
+                  {
+                    'name': 'RANJANG SUSUN TINGKAT',
+                    'price': 'Rp.1.200.000',
+                    'image': 'assets/images/products/ranjang_susun.jpg',
+                    'description': 'Ranjang susun tingkat yang praktis dan space-saving. Ideal untuk kamar anak atau kost yang memiliki ruang terbatas.\n\nDilengkapi dengan tangga yang aman dan nyaman untuk naik ke tingkat atas. Pengaman samping pada tingkat atas untuk keamanan ekstra.\n\nKonstruksi kayu solid yang sangat kuat dan aman untuk anak-anak.',
+                    'specs': [
+                      'Material: Kayu Pinus Solid',
+                      'Finishing: Natural/Duco',
+                      'Ukuran per kasur: 90 cm x 200 cm (Single)',
+                      'Tinggi Total: 180 cm',
+                      'Berat: ±60 kg',
+                      'Kapasitas: Max 100 kg per tingkat',
+                      'Termasuk: Tangga + Pengaman',
+                    ],
+                    'kelebihan': [
+                      'Hemat ruangan',
+                      'Sangat kokoh dan aman',
+                      'Tangga terintegrasi',
+                      'Pengaman safety rail',
+                      'Multifungsi untuk anak',
+                    ]
+                  },
+                ),
+                _buildRanjangCard(
+                  context,
+                  'RANJANG MINIMALIS',
                   'Rp.650.000',
-                  'assets/images/products/kursi_rotan.jpg',
+                  'assets/images/products/ranjang_minimalis.jpg',
                   {
-                    'name': 'KURSI ROTAN',
+                    'name': 'RANJANG MINIMALIS',
                     'price': 'Rp.650.000',
-                    'image': 'assets/images/products/kursi_rotan.jpg',
-                    'description': 'Kursi Rotan Premium\n\nKursi rotan dengan anyaman berkualitas tinggi yang kuat dan fleksibel. Desain modern dengan kaki kayu solid memberikan kesan natural dan hangat.',
+                    'image': 'assets/images/products/ranjang_minimalis.jpg',
+                    'description': 'Ranjang minimalis dengan desain simpel dan fungsional. Cocok untuk kamar tidur dengan konsep minimalis modern.\n\nTanpa headboard sehingga lebih compact dan mudah diatur. Rangka kayu yang kuat dengan finishing natural.\n\nHarga terjangkau dengan kualitas yang tetap bagus dan awet.',
                     'specs': [
-                      'Bahan: Rotan Alami + Kayu Solid',
+                      'Material: Kayu Solid',
                       'Finishing: Natural Varnish',
-                      'Dimensi: 50 cm (lebar) × 50 cm (panjang) × 90 cm (tinggi)',
-                      'Warna: Cokelat Natural',
-                      'Kapasitas: Maksimal hingga 90 kg',
+                      'Ukuran: 120 cm x 200 cm (Single XL)',
+                      'Tinggi: 30 cm dari lantai',
+                      'Berat: ±25 kg',
+                      'Warna: Natural Wood',
+                      'Termasuk: Rangka saja',
                     ],
                     'kelebihan': [
-                      'Ringan namun kuat',
-                      'Anyaman rapi dan detail',
-                      'Sirkulasi udara baik',
-                    ]
-                  },
-                ),
-                // Produk kursi baru ditambahkan di sini
-                _buildKursiCard(
-                  context,
-                  'KURSI ERGONOMIS',
-                  'Rp.550.000',
-                  'assets/images/products/kursi_ergonomis.jpg',
-                  {
-                    'name': 'KURSI ERGONOMIS',
-                    'price': 'Rp.550.000',
-                    'image': 'assets/images/products/kursi_ergonomis.jpg',
-                    'description': 'Kursi Ergonomis Modern\n\nKursi desain ergonomis yang dirancang khusus untuk kenyamanan duduk dalam waktu lama. Dilengkapi dengan sandaran punggung yang mengikuti kontur tubuh dan bantalan duduk yang empuk.',
-                    'specs': [
-                      'Bahan: Mesh breathable + Busa high density',
-                      'Rangka: Baja tubular kuat',
-                      'Dimensi: 55 cm (lebar) × 55 cm (panjang) × 95 cm (tinggi)',
-                      'Warna: Hitam, Abu-abu, Biru',
-                      'Kapasitas: Maksimal hingga 120 kg',
-                      'Fitur: Sandaran adjustable, armrest',
-                    ],
-                    'kelebihan': [
-                      'Desain ergonomis untuk kesehatan tulang belakang',
-                      'Material breathable dan nyaman',
-                      'Tinggi dan sandaran dapat diatur',
-                      'Cocok untuk kerja dan gaming',
+                      'Desain super minimalis',
+                      'Harga terjangkau',
+                      'Compact dan space-saving',
+                      'Mudah dipindahkan',
+                      'Cocok untuk segala usia',
                     ]
                   },
                 ),
@@ -126,7 +135,7 @@ class KursiScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildKursiCard(
+  Widget _buildRanjangCard(
     BuildContext context,
     String name,
     String price,
@@ -140,7 +149,7 @@ class KursiScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DetailKursiScreen(kursi: detailData),
+              builder: (context) => DetailRanjangScreen(ranjang: detailData),
             ),
           );
         },
@@ -154,7 +163,6 @@ class KursiScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Image Container
               Expanded(
                 flex: 3,
                 child: Container(
@@ -172,7 +180,7 @@ class KursiScreen extends StatelessWidget {
                       return Container(
                         color: const Color(0xFFF5F5F5),
                         child: const Icon(
-                          Icons.chair,
+                          Icons.bed,
                           size: 60,
                           color: Colors.brown,
                         ),
@@ -181,8 +189,6 @@ class KursiScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              
-              // Content Container
               Expanded(
                 flex: 2,
                 child: Padding(
@@ -223,7 +229,7 @@ class KursiScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DetailKursiScreen(kursi: detailData),
+                                builder: (context) => DetailRanjangScreen(ranjang: detailData),
                               ),
                             );
                           },
@@ -294,10 +300,11 @@ class KursiScreen extends StatelessWidget {
   }
 }
 
-class DetailKursiScreen extends StatelessWidget {
-  final Map<String, dynamic> kursi;
+// Detail Screen
+class DetailRanjangScreen extends StatelessWidget {
+  final Map<String, dynamic> ranjang;
 
-  const DetailKursiScreen({super.key, required this.kursi});
+  const DetailRanjangScreen({super.key, required this.ranjang});
 
   @override
   Widget build(BuildContext context) {
@@ -305,7 +312,6 @@ class DetailKursiScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFE8F4FF),
       body: Column(
         children: [
-          // Custom App Bar
           Container(
             color: const Color(0xFF86BBF9),
             padding: const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
@@ -335,7 +341,6 @@ class DetailKursiScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Image Container
                   Container(
                     margin: const EdgeInsets.all(16),
                     padding: const EdgeInsets.all(20),
@@ -348,117 +353,59 @@ class DetailKursiScreen extends StatelessWidget {
                       child: Container(
                         width: 200,
                         height: 200,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
                         child: Image.asset(
-                          kursi['image'] ?? 'assets/images/products/kursi_kayu_jati.jpg',
+                          ranjang['image'],
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
-                            return const Icon(
-                              Icons.chair,
-                              size: 120,
-                              color: Colors.brown,
-                            );
+                            return const Icon(Icons.bed, size: 120, color: Colors.brown);
                           },
                         ),
                       ),
                     ),
                   ),
-
-                  // Product Name
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      kursi['name'],
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                      ranjang['name'],
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 8),
-
-                  // Price
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      kursi['price'],
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
+                      ranjang['price'],
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black87),
                     ),
                   ),
                   const SizedBox(height: 16),
-
-                  // Description Title
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      'Deskripsi Produk:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
+                    child: Text('Deskripsi Produk:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
-
-                  // Description Text
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      kursi['description'],
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black87,
-                        height: 1.5,
-                      ),
-                      textAlign: TextAlign.justify,
-                    ),
+                    child: Text(ranjang['description'], style: const TextStyle(fontSize: 14, height: 1.5), textAlign: TextAlign.justify),
                   ),
                   const SizedBox(height: 16),
-
-                  // Spesifikasi Produk
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      'Spesifikasi Produk',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
+                    child: Text('Spesifikasi Produk', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
-
-                  // Specs List
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: (kursi['specs'] as List<String>).map((spec) {
+                      children: (ranjang['specs'] as List<String>).map((spec) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 6),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('• ', style: TextStyle(fontSize: 14)),
-                              Expanded(
-                                child: Text(
-                                  spec,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black87,
-                                    height: 1.4,
-                                  ),
-                                ),
-                              ),
+                              const Text('• '),
+                              Expanded(child: Text(spec, style: const TextStyle(fontSize: 14, height: 1.4))),
                             ],
                           ),
                         );
@@ -466,43 +413,23 @@ class DetailKursiScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-
-                  // Kelebihan
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      'Kelebihan',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
+                    child: Text('Kelebihan', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
-
-                  // Kelebihan List
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: (kursi['kelebihan'] as List<String>).map((item) {
+                      children: (ranjang['kelebihan'] as List<String>).map((item) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 6),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('• ', style: TextStyle(fontSize: 14)),
-                              Expanded(
-                                child: Text(
-                                  item,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black87,
-                                    height: 1.4,
-                                  ),
-                                ),
-                              ),
+                              const Text('• '),
+                              Expanded(child: Text(item, style: const TextStyle(fontSize: 14, height: 1.4))),
                             ],
                           ),
                         );
@@ -510,8 +437,6 @@ class DetailKursiScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 24),
-
-                  // Add to Cart Button
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: SizedBox(
@@ -520,33 +445,20 @@ class DetailKursiScreen extends StatelessWidget {
                       child: ElevatedButton.icon(
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('${kursi['name']} ditambahkan ke keranjang'),
-                              backgroundColor: Colors.green,
-                              duration: const Duration(seconds: 2),
-                            ),
+                            SnackBar(content: Text('${ranjang['name']} ditambahkan ke keranjang'), backgroundColor: Colors.green),
                           );
                         },
                         icon: const Icon(Icons.shopping_cart),
-                        label: const Text(
-                          '+ Keranjang',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        label: const Text('+ Keranjang', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFACD2FF),
                           foregroundColor: Colors.black,
                           elevation: 2,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
                 ],
               ),
             ),

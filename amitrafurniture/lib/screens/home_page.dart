@@ -1,4 +1,7 @@
 import 'package:amitrafurniture/screens/kursi_screen.dart';
+import 'package:amitrafurniture/screens/sofa_screen.dart';
+import 'package:amitrafurniture/screens/meja_screen.dart';
+import 'package:amitrafurniture/screens/ranjang_screen.dart';
 import 'package:amitrafurniture/screens/profile_page.dart';
 import 'package:flutter/material.dart';
 import '../models/product_model.dart';
@@ -31,10 +34,8 @@ class _HomePageState extends State<HomePage> {
     {'icon': Icons.bed, 'name': 'Ranjang'},
   ];
 
-  // Add bottom navigation index
   int _currentBottomNavIndex = 0;
 
-  // Tambahkan map untuk menyimpan stok produk (simulasi) - UPDATED
   final Map<String, int> productStock = {
     'Kursi Goyang': 8,
     'Kursi Santai': 15,
@@ -46,24 +47,21 @@ class _HomePageState extends State<HomePage> {
     'Lorenz Seater Sofa': 2,
   };
 
-  // Method to filter products based on selected category - UPDATED
   List<Product> _getFilteredProducts() {
     final List<Product> allProducts = ProductData.getAllProducts();
-    
+
     switch (_selectedCategoryIndex) {
-      case 0: // Semua
+      case 0:
         return allProducts;
-      case 1: // Populer
-        // Filter produk populer: Laci Modern Retro, Lorenz Seater Sofa, Kursi Santai, Buffet Jati Laci
-        return allProducts.where((product) => 
+      case 1:
+        return allProducts.where((product) =>
           product.name == 'Laci Modern Retro' ||
           product.name == 'Lorenz Seater Sofa' ||
           product.name == 'Kursi Santai' ||
           product.name == 'Buffet Jati Laci'
         ).toList();
-      case 2: // Rekomendasi
-        // Filter produk rekomendasi: Ranjang Modern, Kursi Santai, Laci Modern Retro, Lorenz Seater Sofa
-        return allProducts.where((product) => 
+      case 2:
+        return allProducts.where((product) =>
           product.name == 'Ranjang Modern' ||
           product.name == 'Kursi Santai' ||
           product.name == 'Laci Modern Retro' ||
@@ -81,19 +79,10 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            // Top app bar with hamburger, search, and gear
             _buildTopBar(),
-
-            // Category icon row
             _buildCategoryIconRow(),
-
-            // Promo banners side by side
             _buildPromoBanners(),
-
-            // Filter chips row
             _buildCategoryFilter(),
-
-            // Product grid
             Expanded(child: _buildProductsGrid()),
           ],
         ),
@@ -152,18 +141,33 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // ✅ UPDATED VERSION — sudah termasuk navigasi Sofa, Meja, Ranjang
   Widget _buildCategoryItem(IconData icon, String name) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          print('Kategori $name diklik'); // Debug print
+          print('Kategori $name diklik');
+
           if (name == 'Kursi') {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => const KursiScreen(),
-              ),
+              MaterialPageRoute(builder: (context) => const KursiScreen()),
+            );
+          } else if (name == 'Sofa') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SofaScreen()),
+            );
+          } else if (name == 'Meja') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MejaScreen()),
+            );
+          } else if (name == 'Ranjang') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const RanjangScreen()),
             );
           } else {
             _showSnackBar(context, '$name diklik');
@@ -246,33 +250,34 @@ class _HomePageState extends State<HomePage> {
                     height: 1.2,
                   ),
                 ),
-                if (hasButton) ...[
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    height: 28,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _showSnackBar(context, 'Promo diklik');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: kPrimaryText,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
+                if (hasButton)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: SizedBox(
+                      height: 28,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _showSnackBar(context, 'Promo diklik');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: kPrimaryText,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                      ),
-                      child: const Text(
-                        'BELI SEKARANG',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
+                        child: const Text(
+                          'BELI SEKARANG',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ],
               ],
             ),
           ),
@@ -331,7 +336,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildProductsGrid() {
     final filteredProducts = _getFilteredProducts();
-    
+
     if (filteredProducts.isEmpty) {
       return Center(
         child: Column(
@@ -369,7 +374,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildProductCard(Product product) {
-    // Ambil stok produk, default 0 jika tidak ada
     final stock = productStock[product.name] ?? 0;
 
     return Material(
@@ -393,9 +397,8 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Product Image - DIPERBESAR
               Container(
-                height: 140, // Dinaikkan dari 120
+                height: 140,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.grey[50],
@@ -407,21 +410,19 @@ class _HomePageState extends State<HomePage> {
                 child: Center(
                   child: Image.asset(
                     product.image,
-                    width: 100, // Dinaikkan dari 80
-                    height: 100, // Dinaikkan dari 80
+                    width: 100,
+                    height: 100,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stackTrace) {
                       return Icon(
                         Icons.chair_outlined,
-                        size: 60, // Dinaikkan dari 50
+                        size: 60,
                         color: Colors.grey[400],
                       );
                     },
                   ),
                 ),
               ),
-
-              // Product Info
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: Column(
@@ -447,7 +448,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    // Tampilkan stok
                     Text(
                       'Stok: $stock',
                       style: TextStyle(
@@ -508,28 +508,19 @@ class _HomePageState extends State<HomePage> {
             _currentBottomNavIndex = index;
           });
 
-          // Navigate based on index
           if (index == 2) {
-            // Cart navigation
             Navigator.pushNamed(context, '/cart');
           } else if (index == 3) {
-            // Notifications navigation
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => NotificationPage(),
-              ),
+              MaterialPageRoute(builder: (context) => NotificationPage()),
             );
           } else if (index == 4) {
-            // Profile navigation
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => const ProfilePage(),
-              ),
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
             );
           } else {
-            // Other navigation items
             _showSnackBar(context, '$label diklik');
           }
         },
@@ -547,7 +538,8 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(
                 fontSize: 10,
                 color: isSelected ? const Color(0xFF2196F3) : kPrimaryText,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                fontWeight:
+                    isSelected ? FontWeight.w600 : FontWeight.normal,
               ),
             ),
           ],
