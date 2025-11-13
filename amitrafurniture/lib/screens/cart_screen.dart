@@ -1,3 +1,4 @@
+import 'package:amitrafurniture/screens/checkout_screen.dart';
 import 'package:flutter/material.dart';
 
 // Export CartScreen untuk digunakan di main.dart
@@ -91,9 +92,17 @@ class _CartPageState extends State<CartPage> {
         .fold(0, (sum, item) => sum + (item.price * item.quantity));
   }
 
+  List<CartItem> getSelectedItems() {
+    return cartItems.where((item) => item.isSelected).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final selectedItems = getSelectedItems();
+    final hasSelectedItems = selectedItems.isNotEmpty;
+
     return Scaffold(
+      backgroundColor: const Color(0xFFE3F2FD),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -159,6 +168,7 @@ class _CartPageState extends State<CartPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4),
                           ),
+                          activeColor: Colors.purple,
                         ),
                         const SizedBox(width: 8),
                         // Product Image
@@ -294,6 +304,7 @@ class _CartPageState extends State<CartPage> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),
                       ),
+                      activeColor: Colors.purple,
                     ),
                     const Text(
                       'Semua',
@@ -305,12 +316,24 @@ class _CartPageState extends State<CartPage> {
                     const Spacer(),
                     // Checkout Button
                     ElevatedButton(
-                      onPressed: () {
-                        // Handle checkout
-                      },
+                      onPressed: hasSelectedItems
+                          ? () {
+                              // Navigate to CheckoutScreen
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CheckoutScreen(
+                                    selectedItems: selectedItems,
+                                  ),
+                                ),
+                              );
+                            }
+                          : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4A90E2),
                         foregroundColor: Colors.white,
+                        disabledBackgroundColor: Colors.grey[300],
+                        disabledForegroundColor: Colors.grey[500],
                         padding: const EdgeInsets.symmetric(
                           horizontal: 32,
                           vertical: 14,

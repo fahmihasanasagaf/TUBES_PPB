@@ -54,19 +54,21 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return allProducts;
       case 1:
-        return allProducts.where((product) =>
-          product.name == 'Laci Modern Retro' ||
-          product.name == 'Lorenz Seater Sofa' ||
-          product.name == 'Kursi Santai' ||
-          product.name == 'Buffet Jati Laci'
-        ).toList();
+        return allProducts
+            .where((product) =>
+                product.name == 'Laci Modern Retro' ||
+                product.name == 'Lorenz Seater Sofa' ||
+                product.name == 'Kursi Santai' ||
+                product.name == 'Buffet Jati Laci')
+            .toList();
       case 2:
-        return allProducts.where((product) =>
-          product.name == 'Ranjang Modern' ||
-          product.name == 'Kursi Santai' ||
-          product.name == 'Laci Modern Retro' ||
-          product.name == 'Lorenz Seater Sofa'
-        ).toList();
+        return allProducts
+            .where((product) =>
+                product.name == 'Ranjang Modern' ||
+                product.name == 'Kursi Santai' ||
+                product.name == 'Laci Modern Retro' ||
+                product.name == 'Lorenz Seater Sofa')
+            .toList();
       default:
         return allProducts;
     }
@@ -141,7 +143,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // ✅ UPDATED VERSION — sudah termasuk navigasi Sofa, Meja, Ranjang
   Widget _buildCategoryItem(IconData icon, String name) {
     return Material(
       color: Colors.transparent,
@@ -538,8 +539,7 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(
                 fontSize: 10,
                 color: isSelected ? const Color(0xFF2196F3) : kPrimaryText,
-                fontWeight:
-                    isSelected ? FontWeight.w600 : FontWeight.normal,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
               ),
             ),
           ],

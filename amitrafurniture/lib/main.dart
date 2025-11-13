@@ -1,3 +1,4 @@
+import 'package:amitrafurniture/screens/checkout_screen.dart';
 import 'package:flutter/material.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/login_screen.dart';
@@ -6,15 +7,12 @@ import 'screens/verify_page.dart';
 import 'screens/home_page.dart';
 import 'screens/profile_page.dart';
 import 'screens/customer_service_page.dart';
-import 'screens/cart_screen.dart';
+import 'screens/cart_screen.dart' hide CheckoutScreen;
 import 'screens/notification_page.dart';
 import 'screens/order_history_page.dart';
 import 'screens/sofa_screen.dart';
 import 'screens/ranjang_screen.dart';
 import 'screens/meja_screen.dart';
-
-
-
 
 void main() {
   runApp(const MyApp());
@@ -47,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/sofa': (context) => const SofaScreen(),
         '/ranjang': (context) => const RanjangScreen(),
         '/meja': (context) => const MejaScreen(),
+        'checkout': (context) => CheckoutScreen(selectedItems: []),
       },
     );
   }

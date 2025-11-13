@@ -12,12 +12,14 @@ class KursiScreen extends StatelessWidget {
           // Custom App Bar
           Container(
             color: const Color(0xFF86BBF9),
-            padding: const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
+            padding:
+                const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
             child: Row(
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: const Icon(Icons.arrow_back, color: Colors.black, size: 28),
+                  child: const Icon(Icons.arrow_back,
+                      color: Colors.black, size: 28),
                 ),
                 const SizedBox(width: 16),
                 const Expanded(
@@ -46,12 +48,13 @@ class KursiScreen extends StatelessWidget {
                   context,
                   'KURSI KAYU JATI',
                   'Rp.400.000',
-                  'assets/images/products/kursi_kayu_jati.jpg',
+                  'assets/images/kursikayujati.jpeg',
                   {
                     'name': 'KURSI KAYU JATI',
                     'price': 'Rp.400.000',
-                    'image': 'assets/images/products/kursi_kayu_jati.jpg',
-                    'description': 'Kursi Kayu Jati Elegan\n\nKursi ini terbuat dari kayu jati berkualitas tinggi yang terkenal akan kekuatan dan ketahanannya terhadap rayap serta cuaca. Desainnya sederhana namun elegan, cocok untuk berbagai ruangan seperti ruang tamu, ruang makan, atau ruang kerja.',
+                    'image': 'assets/images/kursikayujati.jpeg',
+                    'description':
+                        'Kursi Kayu Jati Elegan\n\nKursi ini terbuat dari kayu jati berkualitas tinggi yang terkenal akan kekuatan dan ketahanannya terhadap rayap serta cuaca. Desainnya sederhana namun elegan, cocok untuk berbagai ruangan seperti ruang tamu, ruang makan, atau ruang kerja.',
                     'specs': [
                       'Bahan: Kayu Jati Solid',
                       'Finishing: Natural / Glossy',
@@ -70,12 +73,13 @@ class KursiScreen extends StatelessWidget {
                   context,
                   'KURSI ROTAN',
                   'Rp.650.000',
-                  'assets/images/products/kursi_rotan.jpg',
+                  'assets/images/kursirotan.jpeg',
                   {
                     'name': 'KURSI ROTAN',
                     'price': 'Rp.650.000',
-                    'image': 'assets/images/products/kursi_rotan.jpg',
-                    'description': 'Kursi Rotan Premium\n\nKursi rotan dengan anyaman berkualitas tinggi yang kuat dan fleksibel. Desain modern dengan kaki kayu solid memberikan kesan natural dan hangat.',
+                    'image': 'assets/images/kursirotan.jpeg',
+                    'description':
+                        'Kursi Rotan Premium\n\nKursi rotan dengan anyaman berkualitas tinggi yang kuat dan fleksibel. Desain modern dengan kaki kayu solid memberikan kesan natural dan hangat.',
                     'specs': [
                       'Bahan: Rotan Alami + Kayu Solid',
                       'Finishing: Natural Varnish',
@@ -95,12 +99,13 @@ class KursiScreen extends StatelessWidget {
                   context,
                   'KURSI ERGONOMIS',
                   'Rp.550.000',
-                  'assets/images/products/kursi_ergonomis.jpg',
+                  'assets/images/kursisantai.jpeg',
                   {
                     'name': 'KURSI ERGONOMIS',
                     'price': 'Rp.550.000',
-                    'image': 'assets/images/products/kursi_ergonomis.jpg',
-                    'description': 'Kursi Ergonomis Modern\n\nKursi desain ergonomis yang dirancang khusus untuk kenyamanan duduk dalam waktu lama. Dilengkapi dengan sandaran punggung yang mengikuti kontur tubuh dan bantalan duduk yang empuk.',
+                    'image': 'assets/images/kursisantai.jpeg',
+                    'description':
+                        'Kursi Ergonomis Modern\n\nKursi desain ergonomis yang dirancang khusus untuk kenyamanan duduk dalam waktu lama. Dilengkapi dengan sandaran punggung yang mengikuti kontur tubuh dan bantalan duduk yang empuk.',
                     'specs': [
                       'Bahan: Mesh breathable + Busa high density',
                       'Rangka: Baja tubular kuat',
@@ -181,7 +186,7 @@ class KursiScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              
+
               // Content Container
               Expanded(
                 flex: 2,
@@ -223,7 +228,8 @@ class KursiScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DetailKursiScreen(kursi: detailData),
+                                builder: (context) =>
+                                    DetailKursiScreen(kursi: detailData),
                               ),
                             );
                           },
@@ -273,19 +279,23 @@ class KursiScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            icon: const Icon(Icons.home_outlined, color: Colors.black, size: 24),
+            icon:
+                const Icon(Icons.home_outlined, color: Colors.black, size: 24),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined, color: Colors.black, size: 24),
+            icon: const Icon(Icons.shopping_cart_outlined,
+                color: Colors.black, size: 24),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.black, size: 24),
+            icon: const Icon(Icons.notifications_outlined,
+                color: Colors.black, size: 24),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.person_outline, color: Colors.black, size: 24),
+            icon:
+                const Icon(Icons.person_outline, color: Colors.black, size: 24),
             onPressed: () {},
           ),
         ],
@@ -308,12 +318,14 @@ class DetailKursiScreen extends StatelessWidget {
           // Custom App Bar
           Container(
             color: const Color(0xFF86BBF9),
-            padding: const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
+            padding:
+                const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
             child: Row(
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: const Icon(Icons.arrow_back, color: Colors.black, size: 28),
+                  child: const Icon(Icons.arrow_back,
+                      color: Colors.black, size: 28),
                 ),
                 const SizedBox(width: 16),
                 const Expanded(
@@ -342,7 +354,8 @@ class DetailKursiScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFF86BBF9), width: 3),
+                      border:
+                          Border.all(color: const Color(0xFF86BBF9), width: 3),
                     ),
                     child: Center(
                       child: Container(
@@ -352,7 +365,8 @@ class DetailKursiScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Image.asset(
-                          kursi['image'] ?? 'assets/images/products/kursi_kayu_jati.jpg',
+                          kursi['image'] ??
+                              'assets/images/products/kursi_kayu_jati.jpg',
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return const Icon(
@@ -486,7 +500,8 @@ class DetailKursiScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: (kursi['kelebihan'] as List<String>).map((item) {
+                      children:
+                          (kursi['kelebihan'] as List<String>).map((item) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 6),
                           child: Row(
@@ -521,7 +536,8 @@ class DetailKursiScreen extends StatelessWidget {
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('${kursi['name']} ditambahkan ke keranjang'),
+                              content: Text(
+                                  '${kursi['name']} ditambahkan ke keranjang'),
                               backgroundColor: Colors.green,
                               duration: const Duration(seconds: 2),
                             ),

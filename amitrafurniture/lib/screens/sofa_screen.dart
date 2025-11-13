@@ -12,12 +12,14 @@ class SofaScreen extends StatelessWidget {
           // Custom App Bar
           Container(
             color: const Color(0xFF86BBF9),
-            padding: const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
+            padding:
+                const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
             child: Row(
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: const Icon(Icons.arrow_back, color: Colors.black, size: 28),
+                  child: const Icon(Icons.arrow_back,
+                      color: Colors.black, size: 28),
                 ),
                 const SizedBox(width: 16),
                 const Expanded(
@@ -46,12 +48,13 @@ class SofaScreen extends StatelessWidget {
                   context,
                   'SOFA SANTAI',
                   'Rp.450.000',
-                  'assets/images/products/sofa_santai.jpg',
+                  'assets/images/sofasantai.jpeg',
                   {
                     'name': 'SOFA SANTAI',
                     'price': 'Rp.450.000',
-                    'image': 'assets/images/products/sofa_santai.jpg',
-                    'description': 'Kursi Rotan ini terbuat dari rotan alam berkualitas tinggi yang kuat dan tahan lama. Desainnya yang minimalis dan modern cocok untuk berbagai ruangan seperti ruang tamu, teras, atau area santai lainnya.\n\nMemiliki desain yang sederhana namun elegan, kursi ini cocok untuk ruang tamu, teras, laman, hingga area kafe atau restoran yang ingin menciptakan suasana natural.\n\nRotan yang digunakan ringan namun kuat, serta dilapisi finishing pelindung agar tahan terhadap benang dan jamur.',
+                    'image': 'assets/images/sofasantai.jpeg',
+                    'description':
+                        'Kursi Rotan ini terbuat dari rotan alam berkualitas tinggi yang kuat dan tahan lama. Desainnya yang minimalis dan modern cocok untuk berbagai ruangan seperti ruang tamu, teras, atau area santai lainnya.\n\nMemiliki desain yang sederhana namun elegan, kursi ini cocok untuk ruang tamu, teras, laman, hingga area kafe atau restoran yang ingin menciptakan suasana natural.\n\nRotan yang digunakan ringan namun kuat, serta dilapisi finishing pelindung agar tahan terhadap benang dan jamur.',
                     'specs': [
                       'Material: Rotan alami / rotan sintetis (opsional)',
                       'Rangka: Kayu solid atau metal',
@@ -74,12 +77,13 @@ class SofaScreen extends StatelessWidget {
                   context,
                   'SOFA METAL FEET',
                   'Rp.850.000',
-                  'assets/images/products/sofa_metal.jpg',
+                  'assets/images/dan8.jpg',
                   {
                     'name': 'SOFA METAL FEET',
                     'price': 'Rp.850.000',
-                    'image': 'assets/images/products/sofa_metal.jpg',
-                    'description': 'Sofa modern dengan kaki metal yang kokoh dan stabil. Desain minimalis skandinavia dengan bantalan duduk yang empuk dan nyaman.\n\nDilengkapi dengan sandaran punggung ergonomis dan material fabric berkualitas tinggi yang mudah dibersihkan.\n\nCocok untuk ruang tamu minimalis, ruang keluarga, atau kantor modern.',
+                    'image': 'assets/images/dan8.jpg',
+                    'description':
+                        'Sofa modern dengan kaki metal yang kokoh dan stabil. Desain minimalis skandinavia dengan bantalan duduk yang empuk dan nyaman.\n\nDilengkapi dengan sandaran punggung ergonomis dan material fabric berkualitas tinggi yang mudah dibersihkan.\n\nCocok untuk ruang tamu minimalis, ruang keluarga, atau kantor modern.',
                     'specs': [
                       'Material: Fabric premium + Metal feet',
                       'Rangka: Kayu solid berkualitas',
@@ -102,12 +106,13 @@ class SofaScreen extends StatelessWidget {
                   context,
                   'LORENZ SEATER SOFA',
                   'Rp.950.000',
-                  'assets/images/products/lorenz_sofa.jpg',
+                  'assets/images/dan7.jpg',
                   {
                     'name': 'LORENZ SEATER SOFA',
                     'price': 'Rp.950.000',
-                    'image': 'assets/images/products/lorenz_sofa.jpg',
-                    'description': 'Sofa 3 seater dengan desain klasik elegan. Dilengkapi dengan sandaran tangan yang lebar dan nyaman serta bantalan duduk extra tebal.\n\nMaterial fabric premium yang lembut dan tahan lama. Rangka kayu solid yang kokoh memberikan stabilitas maksimal.\n\nPerfect untuk ruang tamu keluarga atau ruang santai yang nyaman.',
+                    'image': 'assets/images/dan7.jpg',
+                    'description':
+                        'Sofa 3 seater dengan desain klasik elegan. Dilengkapi dengan sandaran tangan yang lebar dan nyaman serta bantalan duduk extra tebal.\n\nMaterial fabric premium yang lembut dan tahan lama. Rangka kayu solid yang kokoh memberikan stabilitas maksimal.\n\nPerfect untuk ruang tamu keluarga atau ruang santai yang nyaman.',
                     'specs': [
                       'Material: Velvet fabric premium',
                       'Rangka: Kayu mahoni solid',
@@ -229,7 +234,8 @@ class SofaScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DetailSofaScreen(sofa: detailData),
+                                builder: (context) =>
+                                    DetailSofaScreen(sofa: detailData),
                               ),
                             );
                           },
@@ -279,19 +285,23 @@ class SofaScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            icon: const Icon(Icons.home_outlined, color: Colors.black, size: 24),
+            icon:
+                const Icon(Icons.home_outlined, color: Colors.black, size: 24),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined, color: Colors.black, size: 24),
+            icon: const Icon(Icons.shopping_cart_outlined,
+                color: Colors.black, size: 24),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.black, size: 24),
+            icon: const Icon(Icons.notifications_outlined,
+                color: Colors.black, size: 24),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.person_outline, color: Colors.black, size: 24),
+            icon:
+                const Icon(Icons.person_outline, color: Colors.black, size: 24),
             onPressed: () {},
           ),
         ],
@@ -314,12 +324,14 @@ class DetailSofaScreen extends StatelessWidget {
         children: [
           Container(
             color: const Color(0xFF86BBF9),
-            padding: const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
+            padding:
+                const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
             child: Row(
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: const Icon(Icons.arrow_back, color: Colors.black, size: 28),
+                  child: const Icon(Icons.arrow_back,
+                      color: Colors.black, size: 28),
                 ),
                 const SizedBox(width: 16),
                 const Expanded(
@@ -347,7 +359,8 @@ class DetailSofaScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFF86BBF9), width: 3),
+                      border:
+                          Border.all(color: const Color(0xFF86BBF9), width: 3),
                     ),
                     child: Center(
                       child: Container(
@@ -357,7 +370,8 @@ class DetailSofaScreen extends StatelessWidget {
                           sofa['image'],
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
-                            return const Icon(Icons.weekend, size: 120, color: Colors.brown);
+                            return const Icon(Icons.weekend,
+                                size: 120, color: Colors.brown);
                           },
                         ),
                       ),
@@ -367,7 +381,10 @@ class DetailSofaScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       sofa['name'],
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                      style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -375,23 +392,32 @@ class DetailSofaScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       sofa['price'],
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black87),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87),
                     ),
                   ),
                   const SizedBox(height: 16),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('Deskripsi Produk:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    child: Text('Deskripsi Produk:',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(sofa['description'], style: const TextStyle(fontSize: 14, height: 1.5), textAlign: TextAlign.justify),
+                    child: Text(sofa['description'],
+                        style: const TextStyle(fontSize: 14, height: 1.5),
+                        textAlign: TextAlign.justify),
                   ),
                   const SizedBox(height: 16),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('Spesifikasi Produk', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    child: Text('Spesifikasi Produk',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
                   Padding(
@@ -405,7 +431,10 @@ class DetailSofaScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('• '),
-                              Expanded(child: Text(spec, style: const TextStyle(fontSize: 14, height: 1.4))),
+                              Expanded(
+                                  child: Text(spec,
+                                      style: const TextStyle(
+                                          fontSize: 14, height: 1.4))),
                             ],
                           ),
                         );
@@ -415,7 +444,9 @@ class DetailSofaScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('Kelebihan', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    child: Text('Kelebihan',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
                   Padding(
@@ -429,7 +460,10 @@ class DetailSofaScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('• '),
-                              Expanded(child: Text(item, style: const TextStyle(fontSize: 14, height: 1.4))),
+                              Expanded(
+                                  child: Text(item,
+                                      style: const TextStyle(
+                                          fontSize: 14, height: 1.4))),
                             ],
                           ),
                         );
@@ -445,16 +479,22 @@ class DetailSofaScreen extends StatelessWidget {
                       child: ElevatedButton.icon(
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('${sofa['name']} ditambahkan ke keranjang'), backgroundColor: Colors.green),
+                            SnackBar(
+                                content: Text(
+                                    '${sofa['name']} ditambahkan ke keranjang'),
+                                backgroundColor: Colors.green),
                           );
                         },
                         icon: const Icon(Icons.shopping_cart),
-                        label: const Text('+ Keranjang', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                        label: const Text('+ Keranjang',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w600)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFACD2FF),
                           foregroundColor: Colors.black,
                           elevation: 2,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
                         ),
                       ),
                     ),

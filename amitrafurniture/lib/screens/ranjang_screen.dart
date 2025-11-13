@@ -12,12 +12,14 @@ class RanjangScreen extends StatelessWidget {
           // Custom App Bar
           Container(
             color: const Color(0xFF86BBF9),
-            padding: const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
+            padding:
+                const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
             child: Row(
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: const Icon(Icons.arrow_back, color: Colors.black, size: 28),
+                  child: const Icon(Icons.arrow_back,
+                      color: Colors.black, size: 28),
                 ),
                 const SizedBox(width: 16),
                 const Expanded(
@@ -46,12 +48,13 @@ class RanjangScreen extends StatelessWidget {
                   context,
                   'RANJANG MODERN',
                   'Rp.850.000',
-                  'assets/images/products/ranjang_modern.jpg',
+                  'assets/images/dan4.jpg',
                   {
                     'name': 'RANJANG MODERN',
                     'price': 'Rp.850.000',
-                    'image': 'assets/images/products/ranjang_modern.jpg',
-                    'description': 'Ranjang dengan desain modern minimalis yang cocok untuk kamar tidur kontemporer. Rangka kayu solid yang kokoh dan tahan lama.\n\nDesain headboard yang elegan memberikan kesan mewah pada kamar tidur. Ukuran queen size yang nyaman untuk 2 orang.\n\nDilengkapi dengan penyangga kasur yang kuat dan stabil.',
+                    'image': 'assets/images/dan4.jpg',
+                    'description':
+                        'Ranjang dengan desain modern minimalis yang cocok untuk kamar tidur kontemporer. Rangka kayu solid yang kokoh dan tahan lama.\n\nDesain headboard yang elegan memberikan kesan mewah pada kamar tidur. Ukuran queen size yang nyaman untuk 2 orang.\n\nDilengkapi dengan penyangga kasur yang kuat dan stabil.',
                     'specs': [
                       'Material: Kayu Solid + MDF',
                       'Finishing: Duco/Melamine',
@@ -74,12 +77,13 @@ class RanjangScreen extends StatelessWidget {
                   context,
                   'RANJANG SUSUN TINGKAT',
                   'Rp.1.200.000',
-                  'assets/images/products/ranjang_susun.jpg',
+                  'assets/images/dan3.jpg',
                   {
                     'name': 'RANJANG SUSUN TINGKAT',
                     'price': 'Rp.1.200.000',
-                    'image': 'assets/images/products/ranjang_susun.jpg',
-                    'description': 'Ranjang susun tingkat yang praktis dan space-saving. Ideal untuk kamar anak atau kost yang memiliki ruang terbatas.\n\nDilengkapi dengan tangga yang aman dan nyaman untuk naik ke tingkat atas. Pengaman samping pada tingkat atas untuk keamanan ekstra.\n\nKonstruksi kayu solid yang sangat kuat dan aman untuk anak-anak.',
+                    'image': 'assets/images/dan3.jpg',
+                    'description':
+                        'Ranjang susun tingkat yang praktis dan space-saving. Ideal untuk kamar anak atau kost yang memiliki ruang terbatas.\n\nDilengkapi dengan tangga yang aman dan nyaman untuk naik ke tingkat atas. Pengaman samping pada tingkat atas untuk keamanan ekstra.\n\nKonstruksi kayu solid yang sangat kuat dan aman untuk anak-anak.',
                     'specs': [
                       'Material: Kayu Pinus Solid',
                       'Finishing: Natural/Duco',
@@ -102,12 +106,13 @@ class RanjangScreen extends StatelessWidget {
                   context,
                   'RANJANG MINIMALIS',
                   'Rp.650.000',
-                  'assets/images/products/ranjang_minimalis.jpg',
+                  'assets/images/ranjang minimalis.jpeg',
                   {
                     'name': 'RANJANG MINIMALIS',
                     'price': 'Rp.650.000',
-                    'image': 'assets/images/products/ranjang_minimalis.jpg',
-                    'description': 'Ranjang minimalis dengan desain simpel dan fungsional. Cocok untuk kamar tidur dengan konsep minimalis modern.\n\nTanpa headboard sehingga lebih compact dan mudah diatur. Rangka kayu yang kuat dengan finishing natural.\n\nHarga terjangkau dengan kualitas yang tetap bagus dan awet.',
+                    'image': 'assets/images/ranjang minimalis.jpeg',
+                    'description':
+                        'Ranjang minimalis dengan desain simpel dan fungsional. Cocok untuk kamar tidur dengan konsep minimalis modern.\n\nTanpa headboard sehingga lebih compact dan mudah diatur. Rangka kayu yang kuat dengan finishing natural.\n\nHarga terjangkau dengan kualitas yang tetap bagus dan awet.',
                     'specs': [
                       'Material: Kayu Solid',
                       'Finishing: Natural Varnish',
@@ -229,7 +234,8 @@ class RanjangScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DetailRanjangScreen(ranjang: detailData),
+                                builder: (context) =>
+                                    DetailRanjangScreen(ranjang: detailData),
                               ),
                             );
                           },
@@ -279,19 +285,23 @@ class RanjangScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            icon: const Icon(Icons.home_outlined, color: Colors.black, size: 24),
+            icon:
+                const Icon(Icons.home_outlined, color: Colors.black, size: 24),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined, color: Colors.black, size: 24),
+            icon: const Icon(Icons.shopping_cart_outlined,
+                color: Colors.black, size: 24),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.black, size: 24),
+            icon: const Icon(Icons.notifications_outlined,
+                color: Colors.black, size: 24),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.person_outline, color: Colors.black, size: 24),
+            icon:
+                const Icon(Icons.person_outline, color: Colors.black, size: 24),
             onPressed: () {},
           ),
         ],
@@ -314,12 +324,14 @@ class DetailRanjangScreen extends StatelessWidget {
         children: [
           Container(
             color: const Color(0xFF86BBF9),
-            padding: const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
+            padding:
+                const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
             child: Row(
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: const Icon(Icons.arrow_back, color: Colors.black, size: 28),
+                  child: const Icon(Icons.arrow_back,
+                      color: Colors.black, size: 28),
                 ),
                 const SizedBox(width: 16),
                 const Expanded(
@@ -347,7 +359,8 @@ class DetailRanjangScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFF86BBF9), width: 3),
+                      border:
+                          Border.all(color: const Color(0xFF86BBF9), width: 3),
                     ),
                     child: Center(
                       child: Container(
@@ -357,7 +370,8 @@ class DetailRanjangScreen extends StatelessWidget {
                           ranjang['image'],
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
-                            return const Icon(Icons.bed, size: 120, color: Colors.brown);
+                            return const Icon(Icons.bed,
+                                size: 120, color: Colors.brown);
                           },
                         ),
                       ),
@@ -367,7 +381,10 @@ class DetailRanjangScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       ranjang['name'],
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                      style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -375,23 +392,32 @@ class DetailRanjangScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       ranjang['price'],
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black87),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87),
                     ),
                   ),
                   const SizedBox(height: 16),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('Deskripsi Produk:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    child: Text('Deskripsi Produk:',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(ranjang['description'], style: const TextStyle(fontSize: 14, height: 1.5), textAlign: TextAlign.justify),
+                    child: Text(ranjang['description'],
+                        style: const TextStyle(fontSize: 14, height: 1.5),
+                        textAlign: TextAlign.justify),
                   ),
                   const SizedBox(height: 16),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('Spesifikasi Produk', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    child: Text('Spesifikasi Produk',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
                   Padding(
@@ -405,7 +431,10 @@ class DetailRanjangScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('• '),
-                              Expanded(child: Text(spec, style: const TextStyle(fontSize: 14, height: 1.4))),
+                              Expanded(
+                                  child: Text(spec,
+                                      style: const TextStyle(
+                                          fontSize: 14, height: 1.4))),
                             ],
                           ),
                         );
@@ -415,21 +444,27 @@ class DetailRanjangScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('Kelebihan', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    child: Text('Kelebihan',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: (ranjang['kelebihan'] as List<String>).map((item) {
+                      children:
+                          (ranjang['kelebihan'] as List<String>).map((item) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 6),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('• '),
-                              Expanded(child: Text(item, style: const TextStyle(fontSize: 14, height: 1.4))),
+                              Expanded(
+                                  child: Text(item,
+                                      style: const TextStyle(
+                                          fontSize: 14, height: 1.4))),
                             ],
                           ),
                         );
@@ -445,16 +480,22 @@ class DetailRanjangScreen extends StatelessWidget {
                       child: ElevatedButton.icon(
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('${ranjang['name']} ditambahkan ke keranjang'), backgroundColor: Colors.green),
+                            SnackBar(
+                                content: Text(
+                                    '${ranjang['name']} ditambahkan ke keranjang'),
+                                backgroundColor: Colors.green),
                           );
                         },
                         icon: const Icon(Icons.shopping_cart),
-                        label: const Text('+ Keranjang', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                        label: const Text('+ Keranjang',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w600)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFACD2FF),
                           foregroundColor: Colors.black,
                           elevation: 2,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
                         ),
                       ),
                     ),

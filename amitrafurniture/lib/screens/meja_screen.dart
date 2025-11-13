@@ -12,12 +12,14 @@ class MejaScreen extends StatelessWidget {
           // Custom App Bar
           Container(
             color: const Color(0xFF86BBF9),
-            padding: const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
+            padding:
+                const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
             child: Row(
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: const Icon(Icons.arrow_back, color: Colors.black, size: 28),
+                  child: const Icon(Icons.arrow_back,
+                      color: Colors.black, size: 28),
                 ),
                 const SizedBox(width: 16),
                 const Expanded(
@@ -46,12 +48,13 @@ class MejaScreen extends StatelessWidget {
                   context,
                   'LACI MODERN RETRO',
                   'Rp.450.000',
-                  'assets/images/products/laci_modern.jpg',
+                  'assets/images/laci meja.jpg',
                   {
                     'name': 'LACI MODERN RETRO',
                     'price': 'Rp.450.000',
-                    'image': 'assets/images/products/laci_modern.jpg',
-                    'description': 'Laci modern dengan desain retro yang unik dan eye-catching. Cocok untuk menyimpan berbagai barang dengan rapi dan terorganisir.\n\nDilengkapi dengan 4 laci berukuran sedang yang cukup untuk menyimpan pakaian, dokumen, atau barang-barang lainnya.\n\nMaterial kayu solid berkualitas tinggi dengan finishing natural yang tahan lama.',
+                    'image': 'assets/images/laci meja.jpg',
+                    'description':
+                        'Laci modern dengan desain retro yang unik dan eye-catching. Cocok untuk menyimpan berbagai barang dengan rapi dan terorganisir.\n\nDilengkapi dengan 4 laci berukuran sedang yang cukup untuk menyimpan pakaian, dokumen, atau barang-barang lainnya.\n\nMaterial kayu solid berkualitas tinggi dengan finishing natural yang tahan lama.',
                     'specs': [
                       'Material: Kayu Jati/Mahoni Solid',
                       'Finishing: Natural Varnish',
@@ -74,12 +77,13 @@ class MejaScreen extends StatelessWidget {
                   context,
                   'BUFFET JATI LACI',
                   'Rp.750.000',
-                  'assets/images/products/buffet_jati.jpg',
+                  'assets/images/dan6.jpg',
                   {
                     'name': 'BUFFET JATI LACI',
                     'price': 'Rp.750.000',
-                    'image': 'assets/images/products/buffet_jati.jpg',
-                    'description': 'Buffet kayu jati dengan 6 laci yang luas dan fungsional. Desain klasik elegan yang cocok untuk ruang makan atau ruang tamu.\n\nDapat digunakan untuk menyimpan peralatan makan, taplak meja, atau barang-barang lainnya dengan rapi.\n\nKayu jati pilihan dengan serat indah dan warna natural yang hangat.',
+                    'image': 'assets/images/dan6.jpg',
+                    'description':
+                        'Buffet kayu jati dengan 6 laci yang luas dan fungsional. Desain klasik elegan yang cocok untuk ruang makan atau ruang tamu.\n\nDapat digunakan untuk menyimpan peralatan makan, taplak meja, atau barang-barang lainnya dengan rapi.\n\nKayu jati pilihan dengan serat indah dan warna natural yang hangat.',
                     'specs': [
                       'Material: Kayu Jati Premium Solid',
                       'Finishing: Glossy Natural',
@@ -102,12 +106,13 @@ class MejaScreen extends StatelessWidget {
                   context,
                   'MEJA KERJA MINIMALIS',
                   'Rp.550.000',
-                  'assets/images/products/meja_kerja.jpg',
+                  'assets/images/mejakerja.jpg',
                   {
                     'name': 'MEJA KERJA MINIMALIS',
                     'price': 'Rp.550.000',
-                    'image': 'assets/images/products/meja_kerja.jpg',
-                    'description': 'Meja kerja dengan desain minimalis modern yang cocok untuk home office atau ruang belajar.\n\nPermukaan meja yang luas memberikan ruang kerja yang nyaman. Dilengkapi dengan laci untuk menyimpan alat tulis dan dokumen.\n\nKaki meja yang kuat dan stabil memberikan kenyamanan saat bekerja.',
+                    'image': 'assets/images/mejakerja.jpg',
+                    'description':
+                        'Meja kerja dengan desain minimalis modern yang cocok untuk home office atau ruang belajar.\n\nPermukaan meja yang luas memberikan ruang kerja yang nyaman. Dilengkapi dengan laci untuk menyimpan alat tulis dan dokumen.\n\nKaki meja yang kuat dan stabil memberikan kenyamanan saat bekerja.',
                     'specs': [
                       'Material: Kayu solid + MDF',
                       'Finishing: Matte/Glossy',
@@ -229,7 +234,8 @@ class MejaScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DetailMejaScreen(meja: detailData),
+                                builder: (context) =>
+                                    DetailMejaScreen(meja: detailData),
                               ),
                             );
                           },
@@ -279,19 +285,23 @@ class MejaScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            icon: const Icon(Icons.home_outlined, color: Colors.black, size: 24),
+            icon:
+                const Icon(Icons.home_outlined, color: Colors.black, size: 24),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.shopping_cart_outlined, color: Colors.black, size: 24),
+            icon: const Icon(Icons.shopping_cart_outlined,
+                color: Colors.black, size: 24),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.black, size: 24),
+            icon: const Icon(Icons.notifications_outlined,
+                color: Colors.black, size: 24),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.person_outline, color: Colors.black, size: 24),
+            icon:
+                const Icon(Icons.person_outline, color: Colors.black, size: 24),
             onPressed: () {},
           ),
         ],
@@ -314,12 +324,14 @@ class DetailMejaScreen extends StatelessWidget {
         children: [
           Container(
             color: const Color(0xFF86BBF9),
-            padding: const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
+            padding:
+                const EdgeInsets.only(top: 40, bottom: 16, left: 16, right: 16),
             child: Row(
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: const Icon(Icons.arrow_back, color: Colors.black, size: 28),
+                  child: const Icon(Icons.arrow_back,
+                      color: Colors.black, size: 28),
                 ),
                 const SizedBox(width: 16),
                 const Expanded(
@@ -347,7 +359,8 @@ class DetailMejaScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFF86BBF9), width: 3),
+                      border:
+                          Border.all(color: const Color(0xFF86BBF9), width: 3),
                     ),
                     child: Center(
                       child: Container(
@@ -357,7 +370,8 @@ class DetailMejaScreen extends StatelessWidget {
                           meja['image'],
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
-                            return const Icon(Icons.table_bar, size: 120, color: Colors.brown);
+                            return const Icon(Icons.table_bar,
+                                size: 120, color: Colors.brown);
                           },
                         ),
                       ),
@@ -367,7 +381,10 @@ class DetailMejaScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       meja['name'],
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                      style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -375,23 +392,32 @@ class DetailMejaScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       meja['price'],
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black87),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87),
                     ),
                   ),
                   const SizedBox(height: 16),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('Deskripsi Produk:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    child: Text('Deskripsi Produk:',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(meja['description'], style: const TextStyle(fontSize: 14, height: 1.5), textAlign: TextAlign.justify),
+                    child: Text(meja['description'],
+                        style: const TextStyle(fontSize: 14, height: 1.5),
+                        textAlign: TextAlign.justify),
                   ),
                   const SizedBox(height: 16),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('Spesifikasi Produk', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    child: Text('Spesifikasi Produk',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
                   Padding(
@@ -405,7 +431,10 @@ class DetailMejaScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('• '),
-                              Expanded(child: Text(spec, style: const TextStyle(fontSize: 14, height: 1.4))),
+                              Expanded(
+                                  child: Text(spec,
+                                      style: const TextStyle(
+                                          fontSize: 14, height: 1.4))),
                             ],
                           ),
                         );
@@ -415,7 +444,9 @@ class DetailMejaScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('Kelebihan', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    child: Text('Kelebihan',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
                   const SizedBox(height: 8),
                   Padding(
@@ -429,7 +460,10 @@ class DetailMejaScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text('• '),
-                              Expanded(child: Text(item, style: const TextStyle(fontSize: 14, height: 1.4))),
+                              Expanded(
+                                  child: Text(item,
+                                      style: const TextStyle(
+                                          fontSize: 14, height: 1.4))),
                             ],
                           ),
                         );
@@ -445,16 +479,22 @@ class DetailMejaScreen extends StatelessWidget {
                       child: ElevatedButton.icon(
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('${meja['name']} ditambahkan ke keranjang'), backgroundColor: Colors.green),
+                            SnackBar(
+                                content: Text(
+                                    '${meja['name']} ditambahkan ke keranjang'),
+                                backgroundColor: Colors.green),
                           );
                         },
                         icon: const Icon(Icons.shopping_cart),
-                        label: const Text('+ Keranjang', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                        label: const Text('+ Keranjang',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w600)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFACD2FF),
                           foregroundColor: Colors.black,
                           elevation: 2,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
                         ),
                       ),
                     ),
