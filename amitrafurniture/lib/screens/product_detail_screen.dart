@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/product_model.dart';
+import '../providers/cart_provider.dart';
+import '../services/supabase_service.dart';
+import 'cart_screen.dart' show CartItem;
+import 'checkout_screen.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final Product product;
@@ -102,12 +107,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
                   // Stock Info
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     decoration: BoxDecoration(
                       color: stock > 0 ? Colors.green[50] : Colors.red[50],
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: stock > 0 ? Colors.green[300]! : Colors.red[300]!,
+                        color:
+                            stock > 0 ? Colors.green[300]! : Colors.red[300]!,
                       ),
                     ),
                     child: Row(
@@ -116,15 +123,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         Icon(
                           stock > 0 ? Icons.check_circle : Icons.cancel,
                           size: 18,
-                          color: stock > 0 ? Colors.green[700] : Colors.red[700],
+                          color:
+                              stock > 0 ? Colors.green[700] : Colors.red[700],
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          stock > 0 ? 'Stok tersedia: $stock unit' : 'Stok habis',
+                          stock > 0
+                              ? 'Stok tersedia: $stock unit'
+                              : 'Stok habis',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: stock > 0 ? Colors.green[700] : Colors.red[700],
+                            color:
+                                stock > 0 ? Colors.green[700] : Colors.red[700],
                           ),
                         ),
                       ],
@@ -158,7 +169,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           iconSize: 32,
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 8),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey[300]!),
                             borderRadius: BorderRadius.circular(8),
@@ -228,16 +240,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   const SizedBox(height: 12),
                   // Gunakan specifications langsung dari model, bukan legacy properties
-                  ...widget.product.specifications.map((spec) => 
-                    _buildSpecItem('• $spec')
-                  ).toList(),
+                  ...widget.product.specifications
+                      .map((spec) => _buildSpecItem('• $spec'))
+                      .toList(),
                 ],
               ),
             ),
           ],
         ),
       ),
-      // Bottom Button
+      // Bottom Buttons - Keranjang dan Beli Sekarang
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -251,32 +263,74 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ],
         ),
         child: SafeArea(
-          child: SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: ElevatedButton.icon(
-              onPressed: stock > 0
-                  ? () {
-                      _addToCart(context);
-                    }
-                  : null,
-              icon: const Icon(Icons.shopping_cart_outlined, size: 22),
-              label: Text(
-                stock > 0 ? '+ Keranjang ($quantity)' : 'Stok Habis',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+          child: Row(
+            children: [
+              // Button Keranjang
+              Expanded(
+                child: SizedBox(
+                  height: 50,
+                  child: OutlinedButton.icon(
+                    onPressed: stock > 0
+                        ? () {
+                            _addToCart(context);
+                          }
+                        : null,
+                    icon: const Icon(Icons.shopping_cart_outlined, size: 20),
+                    label: Text(
+                      stock > 0 ? 'Keranjang' : 'Habis',
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor:
+                          stock > 0 ? const Color(0xFF2196F3) : Colors.grey,
+                      side: BorderSide(
+                        color:
+                            stock > 0 ? const Color(0xFF2196F3) : Colors.grey,
+                        width: 2,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: stock > 0 ? const Color(0xFF2196F3) : Colors.grey,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+              const SizedBox(width: 12),
+              // Button Beli Sekarang
+              Expanded(
+                flex: 2,
+                child: SizedBox(
+                  height: 50,
+                  child: ElevatedButton.icon(
+                    onPressed: stock > 0
+                        ? () {
+                            _buyNow(context);
+                          }
+                        : null,
+                    icon: const Icon(Icons.shopping_bag, size: 20),
+                    label: Text(
+                      stock > 0 ? 'Beli Sekarang' : 'Stok Habis',
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          stock > 0 ? const Color(0xFF2196F3) : Colors.grey,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 0,
+                    ),
+                  ),
                 ),
-                elevation: 0,
               ),
-            ),
+            ],
           ),
         ),
       ),
@@ -297,7 +351,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     );
   }
 
-  void _addToCart(BuildContext context) {
+  void _addToCart(BuildContext context) async {
     final stock = productStock[widget.product.name] ?? 0;
 
     if (quantity > stock) {
@@ -314,33 +368,170 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       return;
     }
 
-    // Kurangi stok (dalam aplikasi nyata, ini harus update ke database)
-    setState(() {
-      productStock[widget.product.name] = stock - quantity;
-    });
+    // Cek apakah user sudah login
+    final supabaseService = SupabaseService();
+    final currentUser = supabaseService.currentUser;
 
+    if (currentUser == null) {
+      // Jika belum login, tampilkan dialog
+      _showLoginDialog(context);
+      return;
+    }
+
+    // Tampilkan loading
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('$quantity ${widget.product.name} ditambahkan ke keranjang'),
-        backgroundColor: Colors.green,
-        duration: const Duration(seconds: 2),
+      const SnackBar(
+        content: Row(
+          children: [
+            SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            ),
+            SizedBox(width: 12),
+            Text('Menambahkan ke keranjang...'),
+          ],
+        ),
+        duration: Duration(seconds: 1),
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        action: SnackBarAction(
-          label: 'LIHAT',
-          textColor: Colors.white,
-          onPressed: () {
-            Navigator.pushNamed(context, '/cart');
-          },
-        ),
       ),
     );
 
-    // Reset quantity ke 1
-    setState(() {
-      quantity = 1;
-    });
+    // Tambahkan ke cart menggunakan CartProvider
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    final success = await cartProvider.addToCart(
+      currentUser.id,
+      widget.product.id,
+      quantity,
+    );
+
+    if (success) {
+      // Update stok lokal
+      setState(() {
+        productStock[widget.product.name] = stock - quantity;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content:
+              Text('$quantity ${widget.product.name} ditambahkan ke keranjang'),
+          backgroundColor: Colors.green,
+          duration: const Duration(seconds: 2),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          action: SnackBarAction(
+            label: 'LIHAT',
+            textColor: Colors.white,
+            onPressed: () {
+              Navigator.pushNamed(context, '/cart');
+            },
+          ),
+        ),
+      );
+
+      // Reset quantity ke 1
+      setState(() {
+        quantity = 1;
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              cartProvider.errorMessage ?? 'Gagal menambahkan ke keranjang'),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      );
+    }
+  }
+
+  void _buyNow(BuildContext context) {
+    final stock = productStock[widget.product.name] ?? 0;
+
+    if (quantity > stock) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Jumlah melebihi stok yang tersedia ($stock unit)'),
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      );
+      return;
+    }
+
+    // Cek apakah user sudah login
+    final supabaseService = SupabaseService();
+    final currentUser = supabaseService.currentUser;
+
+    if (currentUser == null) {
+      // Jika belum login, tampilkan dialog
+      _showLoginDialog(context);
+      return;
+    }
+
+    // Buat CartItem untuk checkout
+    final cartItem = CartItem(
+      id: widget.product.id,
+      name: widget.product.name,
+      price: _parsePrice(widget.product.price),
+      quantity: quantity,
+      isSelected: true,
+      imageUrl: widget.product.image,
+    );
+
+    // Langsung ke checkout dengan produk ini
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CheckoutScreen(
+          selectedItems: [cartItem],
+        ),
+      ),
+    );
+  }
+
+  int _parsePrice(String priceString) {
+    // Parse "Rp 5.000.000" or "Rp.5000000" to int
+    final numericString = priceString.replaceAll(RegExp(r'[^0-9]'), '');
+    return int.tryParse(numericString) ?? 0;
+  }
+
+  void _showLoginDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Login Required'),
+        content: const Text(
+            'Anda harus login terlebih dahulu untuk menambahkan produk ke keranjang atau melakukan pembelian.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Batal'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/login');
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF2196F3),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Login'),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -3,12 +3,13 @@ import '../models/product_model.dart';
 class ProductData {
   static List<Product> getAllProducts() {
     return [
-      // KURSI (2 produk)
       Product(
+        id: '1',
         name: 'Kursi Goyang',
         price: 'Rp.1.450.000',
         image: 'assets/images/dan1.jpg',
-        description: 'Kursi goyang klasik dengan desain timeless yang cocok untuk ruang santai. Terbuat dari kayu jati solid dengan mekanisme goyang yang halus dan nyaman.',
+        description:
+            'Kursi goyang klasik dengan desain timeless yang cocok untuk ruang santai. Terbuat dari kayu jati solid dengan mekanisme goyang yang halus dan nyaman.',
         specifications: [
           'Bahan: Kayu Jati Solid Premium',
           'Dimensi: 68cm x 92cm x 108cm',
@@ -21,12 +22,15 @@ class ProductData {
           'Mekanisme goyang yang smooth',
           'Kaki kayu solid dengan reinforcement',
         ],
+        stock: 10,
       ),
       Product(
+        id: '2',
         name: 'Kursi Santai',
         price: 'Rp.750.000',
         image: 'assets/images/dan2.jpg',
-        description: 'Kursi santai ergonomis dengan desain modern dan material yang nyaman. Perfect untuk corner reading, ruang tamu, atau area relaksasi di rumah.',
+        description:
+            'Kursi santai ergonomis dengan desain modern dan material yang nyaman. Perfect untuk corner reading, ruang tamu, atau area relaksasi di rumah.',
         specifications: [
           'Bahan: Fabric Premium + Rangka Kayu',
           'Dimensi: 72cm x 78cm x 88cm',
@@ -39,14 +43,15 @@ class ProductData {
           'Rangka kayu maple reinforced',
           'Kaki kayu dengan rubber feet',
         ],
+        stock: 15,
       ),
-
-      // RANJANG (2 produk)
       Product(
+        id: '3',
         name: 'Ranjang Susun Tingkat',
         price: 'Rp.2.850.000',
         image: 'assets/images/dan3.jpg',
-        description: 'Ranjang susun tingkat praktis dengan desain modern yang hemat space. Cocok untuk kamar anak, guest room, atau apartemen dengan space terbatas.',
+        description:
+            'Ranjang susun tingkat praktis dengan desain modern yang hemat space. Cocok untuk kamar anak, guest room, atau apartemen dengan space terbatas.',
         specifications: [
           'Bahan: Kayu Solid + Metal',
           'Dimensi: 100cm x 200cm x 160cm',
@@ -59,12 +64,15 @@ class ProductData {
           'Tangga yang kokoh dan aman',
           'Slat system untuk mattress support',
         ],
+        stock: 5,
       ),
       Product(
+        id: '4',
         name: 'Ranjang Modern',
         price: 'Rp.3.950.000',
         image: 'assets/images/dan4.jpg',
-        description: 'Ranjang modern minimalis dengan headboard yang elegant dan desain low-profile. Cocok untuk kamar tidur utama dengan gaya kontemporer.',
+        description:
+            'Ranjang modern minimalis dengan headboard yang elegant dan desain low-profile. Cocok untuk kamar tidur utama dengan gaya kontemporer.',
         specifications: [
           'Bahan: Fabric Headboard + Kayu Solid',
           'Dimensi: 160cm x 200cm',
@@ -77,14 +85,15 @@ class ProductData {
           'Low-profile design',
           'Center support reinforcement',
         ],
+        stock: 7,
       ),
-
-      // LACI (2 produk)
       Product(
+        id: '5',
         name: 'Laci Modern Retro',
         price: 'Rp.1.350.000',
         image: 'assets/images/dan5.jpg',
-        description: 'Laci dengan gaya modern retro yang unique dan artistic. Kombinasi warna yang bold dengan handle karakter yang menjadi focal point.',
+        description:
+            'Laci dengan gaya modern retro yang unique dan artistic. Kombinasi warna yang bold dengan handle karakter yang menjadi focal point.',
         specifications: [
           'Bahan: MDF + Kayu Solid',
           'Dimensi: 85cm x 45cm x 90cm',
@@ -97,12 +106,15 @@ class ProductData {
           'Handle karakter retro',
           'Kaki kayu dengan metal accent',
         ],
+        stock: 12,
       ),
       Product(
+        id: '6',
         name: 'Buffet Jati Laci',
         price: 'Rp.2.650.000',
         image: 'assets/images/dan6.jpg',
-        description: 'Buffet serbaguna dari kayu jati asli dengan kombinasi laci dan pintu. Cocok untuk dining room, living room, atau sebagai storage cabinet.',
+        description:
+            'Buffet serbaguna dari kayu jati asli dengan kombinasi laci dan pintu. Cocok untuk dining room, living room, atau sebagai storage cabinet.',
         specifications: [
           'Bahan: Kayu Jati Solid',
           'Dimensi: 120cm x 45cm x 85cm',
@@ -115,14 +127,15 @@ class ProductData {
           'Finishing natural oil protection',
           'Adjustable shelves',
         ],
+        stock: 8,
       ),
-
-      // SOFA (2 produk)
       Product(
+        id: '7',
         name: 'Sofa Metal Feet',
         price: 'Rp.2.950.000',
         image: 'assets/images/dan7.jpg',
-        description: 'Sofa modern dengan metal feet yang elegant dan desain clean lines. Kombinasi antara kekuatan metal dan kenyamanan fabric premium.',
+        description:
+            'Sofa modern dengan metal feet yang elegant dan desain clean lines. Kombinasi antara kekuatan metal dan kenyamanan fabric premium.',
         specifications: [
           'Bahan: Linen Fabric + Metal Frame',
           'Dimensi: 185cm x 88cm x 78cm',
@@ -135,12 +148,15 @@ class ProductData {
           'High resilience foam',
           'Solid wood frame internal',
         ],
+        stock: 6,
       ),
       Product(
+        id: '8',
         name: 'Lorenz Seater Sofa',
         price: 'Rp.4.250.000',
         image: 'assets/images/dan8.jpg',
-        description: 'Sofa premium "Lorenz" dengan desain luxurious dan kenyamanan maksimal. Perfect untuk ruang tamu utama yang mengutamakan style dan comfort.',
+        description:
+            'Sofa premium "Lorenz" dengan desain luxurious dan kenyamanan maksimal. Perfect untuk ruang tamu utama yang mengutamakan style dan comfort.',
         specifications: [
           'Bahan: Premium Chenille Fabric',
           'Dimensi: 210cm x 95cm x 82cm',
@@ -153,37 +169,39 @@ class ProductData {
           'Solid hardwood frame',
           'Premium feather filled pillows',
         ],
+        stock: 4,
       ),
     ];
   }
 
-  // Method untuk mendapatkan produk berdasarkan kategori
   static List<Product> getProductsByCategory(String category) {
     final allProducts = getAllProducts();
-    
+
     switch (category.toLowerCase()) {
       case 'kursi':
-        return allProducts.where((p) => 
-          p.name.toLowerCase().contains('kursi')
-        ).toList();
+        return allProducts
+            .where((p) => p.name.toLowerCase().contains('kursi'))
+            .toList();
       case 'sofa':
-        return allProducts.where((p) => 
-          p.name.toLowerCase().contains('sofa')
-        ).toList();
+        return allProducts
+            .where((p) => p.name.toLowerCase().contains('sofa'))
+            .toList();
       case 'meja':
-        return allProducts.where((p) => 
-          p.name.toLowerCase().contains('meja') ||
-          p.name.toLowerCase().contains('buffet')
-        ).toList();
+        return allProducts
+            .where((p) =>
+                p.name.toLowerCase().contains('meja') ||
+                p.name.toLowerCase().contains('buffet'))
+            .toList();
       case 'ranjang':
-        return allProducts.where((p) => 
-          p.name.toLowerCase().contains('ranjang')
-        ).toList();
+        return allProducts
+            .where((p) => p.name.toLowerCase().contains('ranjang'))
+            .toList();
       case 'laci':
-        return allProducts.where((p) => 
-          p.name.toLowerCase().contains('laci') ||
-          p.name.toLowerCase().contains('buffet')
-        ).toList();
+        return allProducts
+            .where((p) =>
+                p.name.toLowerCase().contains('laci') ||
+                p.name.toLowerCase().contains('buffet'))
+            .toList();
       default:
         return allProducts;
     }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -7,9 +9,14 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderStateMixin {
+class _RegisterPageState extends State<RegisterPage>
+    with SingleTickerProviderStateMixin {
   bool agree = false;
   final _formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
 
@@ -27,15 +34,69 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
 
   @override
   void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
     _animationController.dispose();
     super.dispose();
   }
 
-  void _navigateToHome(BuildContext context) {
-    _animationController.forward().then((_) {
-      _animationController.reverse();
-      Navigator.pushNamed(context, '/home');
-    });
+  Future<void> _register(BuildContext context) async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    if (!agree) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Anda harus menyetujui syarat dan ketentuan')),
+      );
+      return;
+    }
+
+    if (passwordController.text != confirmPasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Password tidak cocok')),
+      );
+      return;
+    }
+
+    _animationController.forward().then((_) => _animationController.reverse());
+
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final success = await authProvider.signUp(
+      emailController.text.trim(),
+      passwordController.text,
+      nameController.text.trim(),
+    );
+
+    if (success && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Registrasi berhasil! Silakan login'),
+          backgroundColor: Colors.green,
+        ),
+      );
+      Navigator.pop(context);
+    } else if (mounted) {
+      // Show detailed error
+      final errorMsg = authProvider.errorMessage ?? 'Registrasi gagal';
+      print('REGISTRATION ERROR: $errorMsg'); // Debug print
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMsg),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 5),
+          action: SnackBarAction(
+            label: 'OK',
+            textColor: Colors.white,
+            onPressed: () {},
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -50,9 +111,11 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.chair_outlined, size: 80, color: Color.fromARGB(255, 54, 156, 251)),
+                const Icon(Icons.chair_outlined,
+                    size: 80, color: Color.fromARGB(255, 54, 156, 251)),
                 const Text('Buat Akun',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                    style:
+                        TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
                 const Text(
                   'Isi informasi Anda di bawah ini atau daftar dengan akun sosial Anda',
@@ -60,15 +123,20 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                   style: TextStyle(fontSize: 14),
                 ),
                 const SizedBox(height: 20),
-                _buildTextField('Nama', 'Jhon Doe'),
+                _buildTextField('Nama', 'Jhon Doe', nameController),
                 const SizedBox(height: 10),
-                _buildTextField('Email', 'Example@gmail.com'),
+                _buildTextField('Email', 'Example@gmail.com', emailController),
                 const SizedBox(height: 10),
-                _buildTextField('Kata sandi', '********', isPassword: true),
+                _buildTextField('Kata sandi', '********', passwordController,
+                    isPassword: true),
+                const SizedBox(height: 10),
+                _buildTextField('Konfirmasi Kata sandi', '********',
+                    confirmPasswordController,
+                    isPassword: true),
                 Row(
                   children: [
                     Checkbox(
-                        value: agree, 
+                        value: agree,
                         onChanged: (v) => setState(() => agree = v!)),
                     const Expanded(
                         child: Text('Setuju dengan syarat & ketentuan')),
@@ -79,13 +147,24 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                     backgroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 50),
                   ),
-                  onPressed: agree ? () {
-                    if (_formKey.currentState!.validate()) {
-                      Navigator.pushNamed(context, '/verify');
-                    }
-                  } : null,
-                  child: const Text('Daftar',
-                      style: TextStyle(fontSize: 18, color: Colors.black)),
+                  onPressed: () => _register(context),
+                  child: Consumer<AuthProvider>(
+                    builder: (context, authProvider, child) {
+                      if (authProvider.isLoading) {
+                        return const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.black),
+                          ),
+                        );
+                      }
+                      return const Text('Daftar',
+                          style: TextStyle(fontSize: 18, color: Colors.black));
+                    },
+                  ),
                 ),
                 const SizedBox(height: 15),
                 const Text('Atau masuk dengan'),
@@ -104,7 +183,7 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                       },
                       child: GestureDetector(
                         onTapDown: (_) => _animationController.forward(),
-                        onTapUp: (_) => _navigateToHome(context),
+                        onTapUp: (_) => _animationController.reverse(),
                         onTapCancel: () => _animationController.reverse(),
                         child: Container(
                           padding: const EdgeInsets.all(12),
@@ -120,10 +199,10 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                             ],
                           ),
                           child: Image.asset(
-                            'assets/images/google.png', 
+                            'assets/images/google.png',
                             height: 35,
-                            errorBuilder: (context, error, stackTrace) => 
-                              const Icon(Icons.g_mobiledata, size: 35),
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(Icons.g_mobiledata, size: 35),
                           ),
                         ),
                       ),
@@ -140,7 +219,7 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                       },
                       child: GestureDetector(
                         onTapDown: (_) => _animationController.forward(),
-                        onTapUp: (_) => _navigateToHome(context),
+                        onTapUp: (_) => _animationController.reverse(),
                         onTapCancel: () => _animationController.reverse(),
                         child: Container(
                           padding: const EdgeInsets.all(12),
@@ -156,10 +235,10 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
                             ],
                           ),
                           child: Image.asset(
-                            'assets/images/whatsapp.png', 
+                            'assets/images/whatsapp.png',
                             height: 35,
-                            errorBuilder: (context, error, stackTrace) => 
-                              const Icon(Icons.chat, size: 35),
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(Icons.chat, size: 35),
                           ),
                         ),
                       ),
@@ -194,10 +273,24 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
     );
   }
 
-  Widget _buildTextField(String label, String hint,
+  Widget _buildTextField(
+      String label, String hint, TextEditingController controller,
       {bool isPassword = false}) {
     return TextFormField(
+      controller: controller,
       obscureText: isPassword,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return '$label tidak boleh kosong';
+        }
+        if (label == 'Email' && !value.contains('@')) {
+          return 'Email tidak valid';
+        }
+        if (label == 'Kata sandi' && value.length < 6) {
+          return 'Password minimal 6 karakter';
+        }
+        return null;
+      },
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
@@ -215,12 +308,6 @@ class _RegisterPageState extends State<RegisterPage> with SingleTickerProviderSt
             ? const Icon(Icons.visibility_off, color: Colors.black)
             : null,
       ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return '$label harus diisi';
-        }
-        return null;
-      },
     );
   }
 }

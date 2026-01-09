@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
 import 'customer_service_page.dart';
-import 'order_history_page.dart';
-import 'beli_lagi_page.dart'; // Import halaman BeliLagiPage
-import 'favorit_saya_page.dart'; // Import halaman FavoritSayaPage
+import 'orders_screen.dart';
+import 'beli_lagi_page.dart';
+import 'favorit_saya_page.dart';
+import 'chat_screen.dart';
+import 'login_screen.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
-  void _navigateToOrderHistory(BuildContext context, int initialTab) {
+  void _navigateToOrders(BuildContext context, String selectedTab) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => OrderHistoryPage(initialTab: initialTab),
+        builder: (context) => OrdersScreen(initialTab: selectedTab),
       ),
     );
   }
@@ -70,30 +74,34 @@ class ProfilePage extends StatelessWidget {
                           // Belum Bayar - bisa diklik
                           GestureDetector(
                             onTap: () {
-                              _navigateToOrderHistory(context, 0);
+                              _navigateToOrders(context, 'Belum Dibayar');
                             },
-                            child: _buildOrderStatus('Belum Bayar', Icons.payment, true),
+                            child: _buildOrderStatus(
+                                'Belum Bayar', Icons.payment, true),
                           ),
                           // Dikemas - bisa diklik
                           GestureDetector(
                             onTap: () {
-                              _navigateToOrderHistory(context, 1);
+                              _navigateToOrders(context, 'Dikemas');
                             },
-                            child: _buildOrderStatus('Dikemas', Icons.inventory_2, false),
+                            child: _buildOrderStatus(
+                                'Dikemas', Icons.inventory_2, false),
                           ),
                           // Dikirim - bisa diklik
                           GestureDetector(
                             onTap: () {
-                              _navigateToOrderHistory(context, 2);
+                              _navigateToOrders(context, 'Dikirim');
                             },
-                            child: _buildOrderStatus('Dikirim', Icons.local_shipping, false),
+                            child: _buildOrderStatus(
+                                'Dikirim', Icons.local_shipping, false),
                           ),
-                          // Diberi Penilaian - bisa diklik
+                          // Selesai - bisa diklik
                           GestureDetector(
                             onTap: () {
-                              _navigateToOrderHistory(context, 3);
+                              _navigateToOrders(context, 'Selesai');
                             },
-                            child: _buildOrderStatus('Diberi Penilaian', Icons.star_border, false),
+                            child: _buildOrderStatus(
+                                'Selesai', Icons.check_circle_outline, false),
                           ),
                         ],
                       ),
@@ -104,12 +112,7 @@ class ProfilePage extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const OrderHistoryPage(),
-                            ),
-                          );
+                          _navigateToOrders(context, 'Semua');
                         },
                         child: const Center(
                           child: Text(
@@ -202,7 +205,7 @@ class ProfilePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const CustomerServicePage(),
+                        builder: (context) => const ChatScreen(),
                       ),
                     );
                   },
@@ -242,7 +245,8 @@ class ProfilePage extends StatelessWidget {
                     _buildClickableItem(
                       'No.Handphone ******91',
                       onTap: () {
-                        _showEditDialog(context, 'No. Handphone', '081234567891');
+                        _showEditDialog(
+                            context, 'No. Handphone', '081234567891');
                       },
                     ),
                     const Divider(height: 1, indent: 16, endIndent: 16),
@@ -258,6 +262,81 @@ class ProfilePage extends StatelessWidget {
               ),
 
               const SizedBox(height: 32),
+
+              // LOG OUT BUTTON
+              Container(
+                width: double.infinity,
+                height: 50,
+                margin: const EdgeInsets.symmetric(horizontal: 8),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    // Show confirmation dialog
+                    final bool? confirm = await showDialog<bool>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Konfirmasi'),
+                          content:
+                              const Text('Apakah Anda yakin ingin keluar?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text('Batal'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                foregroundColor: Colors.white,
+                              ),
+                              child: const Text('Keluar'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    if (confirm == true && context.mounted) {
+                      // Logout
+                      await context.read<AuthProvider>().signOut();
+
+                      // Navigate to login and remove all previous routes
+                      if (context.mounted) {
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                          (route) => false,
+                        );
+                      }
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 2,
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.logout, size: 20),
+                      SizedBox(width: 8),
+                      Text(
+                        'Keluar',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 12),
 
               // SIMPAN BUTTON
               Container(
@@ -347,9 +426,11 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  void _showEditDialog(BuildContext context, String field, String currentValue) {
-    TextEditingController controller = TextEditingController(text: currentValue);
-    
+  void _showEditDialog(
+      BuildContext context, String field, String currentValue) {
+    TextEditingController controller =
+        TextEditingController(text: currentValue);
+
     showDialog(
       context: context,
       builder: (BuildContext context) {

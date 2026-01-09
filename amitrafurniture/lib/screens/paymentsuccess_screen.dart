@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'orders_screen.dart';
+import 'chat_screen.dart';
 
 class PaymentSuccessScreen extends StatelessWidget {
   const PaymentSuccessScreen({Key? key}) : super(key: key);
@@ -139,8 +141,13 @@ class PaymentSuccessScreen extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navigate to order list or home
-                    Navigator.of(context).popUntil((route) => route.isFirst);
+                    // Navigate to orders screen
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const OrdersScreen(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFB3D9FF),
@@ -178,10 +185,13 @@ class PaymentSuccessScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildNavItem(Icons.person_outline, false),
-                _buildNavItem(Icons.chat_bubble_outline, false),
-                _buildNavItem(Icons.shopping_cart_outlined, false),
-                _buildNavItem(Icons.notifications_outlined, false),
+                _buildNavItem(context, Icons.person_outline, false, null),
+                _buildNavItem(context, Icons.chat_bubble_outline, false,
+                    const ChatScreen()),
+                _buildNavItem(
+                    context, Icons.shopping_cart_outlined, false, null),
+                _buildNavItem(
+                    context, Icons.notifications_outlined, false, null),
               ],
             ),
           ),
@@ -201,13 +211,24 @@ class PaymentSuccessScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildNavItem(IconData icon, bool isActive) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      child: Icon(
-        icon,
-        size: 28,
-        color: isActive ? Colors.blue[900] : Colors.black54,
+  Widget _buildNavItem(
+      BuildContext context, IconData icon, bool isActive, Widget? screen) {
+    return InkWell(
+      onTap: screen != null
+          ? () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => screen),
+              );
+            }
+          : null,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        child: Icon(
+          icon,
+          size: 28,
+          color: isActive ? Colors.blue[900] : Colors.black54,
+        ),
       ),
     );
   }

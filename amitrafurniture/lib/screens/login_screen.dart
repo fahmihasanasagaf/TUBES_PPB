@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -7,7 +9,8 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
+class _LoginScreenState extends State<LoginScreen>
+    with SingleTickerProviderStateMixin {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   late AnimationController _animationController;
@@ -27,15 +30,39 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   @override
   void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
     _animationController.dispose();
     super.dispose();
   }
 
-  void _navigateToHome(BuildContext context) {
-    _animationController.forward().then((_) {
-      _animationController.reverse();
-      Navigator.pushNamed(context, '/home');
-    });
+  Future<void> _navigateToHome(BuildContext context) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Email dan password harus diisi')),
+      );
+      return;
+    }
+
+    _animationController.forward().then((_) => _animationController.reverse());
+
+    final success = await authProvider.signIn(
+      emailController.text.trim(),
+      passwordController.text,
+    );
+
+    if (success && mounted) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(authProvider.errorMessage ?? 'Login gagal'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   @override
@@ -48,7 +75,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Icon(Icons.chair_outlined, size: 80, color: Color.fromARGB(255, 54, 156, 251)),
+              const Icon(Icons.chair_outlined,
+                  size: 80, color: Color.fromARGB(255, 54, 156, 251)),
               const SizedBox(height: 25),
               const Text('Login',
                   style: TextStyle(
@@ -64,8 +92,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
               const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Email',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold))),
               const SizedBox(height: 5),
               TextField(
                 controller: emailController,
@@ -83,8 +111,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
               const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('Kata sandi',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold))),
+                      style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold))),
               const SizedBox(height: 5),
               TextField(
                 controller: passwordController,
@@ -110,15 +138,28 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                         horizontal: 100, vertical: 15),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12))),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/home');
-                },
-                child: const Text(
-                  'Login',
-                  style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
+                onPressed: () => _navigateToHome(context),
+                child: Consumer<AuthProvider>(
+                  builder: (context, authProvider, child) {
+                    if (authProvider.isLoading) {
+                      return const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.black),
+                        ),
+                      );
+                    }
+                    return const Text(
+                      'Login',
+                      style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    );
+                  },
                 ),
               ),
 
@@ -155,10 +196,10 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                           ],
                         ),
                         child: Image.asset(
-                          'assets/images/google.png', 
+                          'assets/images/google.png',
                           height: 35,
-                          errorBuilder: (context, error, stackTrace) => 
-                            const Icon(Icons.g_mobiledata, size: 35),
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(Icons.g_mobiledata, size: 35),
                         ),
                       ),
                     ),
@@ -175,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     },
                     child: GestureDetector(
                       onTapDown: (_) => _animationController.forward(),
-                      onTapUp: (_) => _navigateToHome(context),
+                      onTapUp: (_) => _animationController.reverse(),
                       onTapCancel: () => _animationController.reverse(),
                       child: Container(
                         padding: const EdgeInsets.all(12),
@@ -191,10 +232,10 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                           ],
                         ),
                         child: Image.asset(
-                          'assets/images/whatsapp.png', 
+                          'assets/images/whatsapp.png',
                           height: 40,
-                          errorBuilder: (context, error, stackTrace) => 
-                            const Icon(Icons.chat, size: 35),
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(Icons.chat, size: 35),
                         ),
                       ),
                     ),
@@ -212,10 +253,25 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     },
                     child: const Text("Daftar",
                         style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold)),
+                            color: Colors.blue, fontWeight: FontWeight.bold)),
                   ),
                 ],
+              ),
+              const SizedBox(height: 15),
+
+              // Link ke Admin Login
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/admin_login');
+                },
+                child: const Text(
+                  "Login sebagai Admin",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
               ),
             ],
           ),

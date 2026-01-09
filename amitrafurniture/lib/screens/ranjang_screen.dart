@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/cart_provider.dart';
+import '../services/supabase_service.dart';
+import 'cart_screen.dart' show CartItem;
+import 'checkout_screen.dart';
 
-class RanjangScreen extends StatelessWidget {
+class RanjangScreen extends StatefulWidget {
   const RanjangScreen({super.key});
 
+  @override
+  State<RanjangScreen> createState() => _RanjangScreenState();
+}
+
+class _RanjangScreenState extends State<RanjangScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -226,36 +236,56 @@ class RanjangScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 28,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailRanjangScreen(ranjang: detailData),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              height: 28,
+                              child: OutlinedButton(
+                                onPressed: () =>
+                                    _addToCart(name, price, imagePath),
+                                style: OutlinedButton.styleFrom(
+                                  foregroundColor: const Color(0xFF2196F3),
+                                  side: const BorderSide(
+                                      color: Color(0xFF2196F3), width: 1.5),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                ),
+                                child:
+                                    const Icon(Icons.shopping_cart, size: 16),
                               ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFACD2FF),
-                            foregroundColor: Colors.black,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            padding: EdgeInsets.zero,
-                          ),
-                          child: const Text(
-                            'Detail',
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                        ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            flex: 2,
+                            child: SizedBox(
+                              height: 28,
+                              child: ElevatedButton(
+                                onPressed: () =>
+                                    _buyNow(name, price, imagePath),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF2196F3),
+                                  foregroundColor: Colors.white,
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                ),
+                                child: const Text(
+                                  'Beli',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -264,6 +294,119 @@ class RanjangScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _addToCart(String name, String price, String imagePath) async {
+    final supabaseService = SupabaseService();
+    final currentUser = supabaseService.currentUser;
+
+    if (currentUser == null) {
+      _showLoginDialog();
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Row(
+          children: [
+            SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            ),
+            SizedBox(width: 12),
+            Text('Menambahkan ke keranjang...'),
+          ],
+        ),
+        duration: Duration(seconds: 1),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('$name ditambahkan ke keranjang'),
+        backgroundColor: Colors.green,
+        duration: const Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        action: SnackBarAction(
+          label: 'LIHAT',
+          textColor: Colors.white,
+          onPressed: () {
+            Navigator.pushNamed(context, '/cart');
+          },
+        ),
+      ),
+    );
+  }
+
+  void _buyNow(String name, String price, String imagePath) {
+    final supabaseService = SupabaseService();
+    final currentUser = supabaseService.currentUser;
+
+    if (currentUser == null) {
+      _showLoginDialog();
+      return;
+    }
+
+    final cartItem = CartItem(
+      id: name.replaceAll(' ', '_').toLowerCase(),
+      name: name,
+      price: _parsePrice(price),
+      quantity: 1,
+      isSelected: true,
+      imageUrl: imagePath,
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CheckoutScreen(
+          selectedItems: [cartItem],
+        ),
+      ),
+    );
+  }
+
+  int _parsePrice(String priceString) {
+    final numericString = priceString.replaceAll(RegExp(r'[^0-9]'), '');
+    return int.tryParse(numericString) ?? 0;
+  }
+
+  void _showLoginDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Login Required'),
+        content: const Text(
+            'Anda harus login terlebih dahulu untuk menambahkan produk ke keranjang atau melakukan pembelian.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Batal'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/login');
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF2196F3),
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Login'),
+          ),
+        ],
       ),
     );
   }

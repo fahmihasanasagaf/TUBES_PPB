@@ -1,5 +1,5 @@
 import 'package:amitrafurniture/screens/cart_screen.dart';
-import 'package:amitrafurniture/screens/paymentsuccess_screen.dart';
+import 'package:amitrafurniture/screens/payment_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -39,21 +39,62 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   String selectedPayment = '';
   String? selectedBankTransfer;
   String? selectedEWallet;
+  String? selectedShipping;
 
-  // Data untuk Transfer Bank
   final List<Map<String, String>> bankTransferOptions = [
-    {'id': 'bca', 'name': 'BCA Virtual Account'},
-    {'id': 'mandiri', 'name': 'Mandiri Virtual Account'},
-    {'id': 'bni', 'name': 'BNI Virtual Account'},
-    {'id': 'bri', 'name': 'BRI Virtual Account'},
+    {
+      'id': 'bca',
+      'name': 'BCA Virtual Account',
+      'account': '8810 5566 9912',
+      'holder': 'A Mitra Furniture'
+    },
+    {
+      'id': 'mandiri',
+      'name': 'Mandiri Virtual Account',
+      'account': '1440 0088 7733',
+      'holder': 'A Mitra Furniture'
+    },
+    {
+      'id': 'bni',
+      'name': 'BNI Virtual Account',
+      'account': '0998 8877 6655',
+      'holder': 'A Mitra Furniture'
+    },
+    {
+      'id': 'bri',
+      'name': 'BRI Virtual Account',
+      'account': '0055 1122 3344',
+      'holder': 'A Mitra Furniture'
+    },
   ];
 
-  // Data untuk E-Wallet
   final List<Map<String, String>> eWalletOptions = [
-    {'id': 'gopay', 'name': 'GoPay'},
-    {'id': 'ovo', 'name': 'OVO'},
-    {'id': 'dana', 'name': 'DANA'},
-    {'id': 'shopeepay', 'name': 'ShopeePay'},
+    {'id': 'gopay', 'name': 'GoPay', 'phone': '081234567890'},
+    {'id': 'ovo', 'name': 'OVO', 'phone': '081234567890'},
+    {'id': 'dana', 'name': 'DANA', 'phone': '081234567890'},
+    {'id': 'shopeepay', 'name': 'ShopeePay', 'phone': '081234567890'},
+  ];
+
+  // Data untuk Opsi Pengiriman
+  final List<Map<String, dynamic>> shippingOptions = [
+    {
+      'id': 'regular',
+      'name': 'Reguler',
+      'description': 'Estimasi 5-7 hari',
+      'cost': 15000.0
+    },
+    {
+      'id': 'express',
+      'name': 'Express',
+      'description': 'Estimasi 2-3 hari',
+      'cost': 35000.0
+    },
+    {
+      'id': 'instant',
+      'name': 'Same Day',
+      'description': 'Estimasi hari ini',
+      'cost': 50000.0
+    },
   ];
 
   double getTotalPrice() {
@@ -67,10 +108,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return widget.selectedItems.fold(0, (sum, item) => sum + item.quantity);
   }
 
+  double getShippingCost() {
+    if (selectedShipping == null) return 0.0;
+    final shipping = shippingOptions.firstWhere(
+      (s) => s['id'] == selectedShipping,
+      orElse: () => {'cost': 0.0},
+    );
+    return shipping['cost'] as double;
+  }
+
   @override
   Widget build(BuildContext context) {
     final subtotal = getTotalPrice();
-    final shippingCost = 0.0;
+    final shippingCost = getShippingCost();
     final total = subtotal + shippingCost;
 
     return Scaffold(
@@ -317,37 +367,65 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   Widget _buildShippingSection() {
+    String shippingText = 'Pilih Pengiriman';
+    if (selectedShipping != null) {
+      final shipping = shippingOptions.firstWhere(
+        (s) => s['id'] == selectedShipping,
+      );
+      shippingText =
+          '${shipping['name']} - Rp.${_formatPrice(shipping['cost'] as double)}';
+    }
+
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          _buildShippingRow('Pesan Untuk Penjual', 'Tinggalkan Pesan'),
+          _buildShippingRow('Pesan Untuk Penjual', 'Tinggalkan Pesan',
+              onTap: () {
+            _showMessageDialog();
+          }),
           const SizedBox(height: 12),
-          _buildShippingRow('Opsi Pengiriman', 'Lihat semua'),
+          _buildShippingRow('Opsi Pengiriman', shippingText, onTap: () {
+            _showShippingOptionsDialog();
+          }),
         ],
       ),
     );
   }
 
-  Widget _buildShippingRow(String title, String value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(fontSize: 14, color: Colors.black87),
-        ),
-        Row(
-          children: [
-            Text(
-              value,
-              style: const TextStyle(fontSize: 14, color: Colors.grey),
-            ),
-            const SizedBox(width: 4),
-            const Icon(Icons.chevron_right, size: 20, color: Colors.grey),
-          ],
-        ),
-      ],
+  Widget _buildShippingRow(String title, String value, {VoidCallback? onTap}) {
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontSize: 14, color: Colors.black87),
+          ),
+          Row(
+            children: [
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: onTap != null &&
+                          value != 'Tinggalkan Pesan' &&
+                          value != 'Pilih Pengiriman'
+                      ? Colors.blue
+                      : Colors.grey,
+                  fontWeight:
+                      value != 'Tinggalkan Pesan' && value != 'Pilih Pengiriman'
+                          ? FontWeight.w500
+                          : FontWeight.normal,
+                ),
+              ),
+              const SizedBox(width: 4),
+              const Icon(Icons.chevron_right, size: 20, color: Colors.grey),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -497,6 +575,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     Function(String) onSelect,
   ) {
     final isSelected = selectedValue == id;
+
+    // Get account info
+    String? accountInfo;
+    if (selectedPayment == 'bank_transfer') {
+      final bank = bankTransferOptions.firstWhere((b) => b['id'] == id);
+      accountInfo = '${bank['account']} - ${bank['holder']}';
+    } else if (selectedPayment == 'e_wallet') {
+      final wallet = eWalletOptions.firstWhere((w) => w['id'] == id);
+      accountInfo = wallet['phone'];
+    }
+
     return InkWell(
       onTap: () => onSelect(id),
       child: Container(
@@ -505,7 +594,24 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           children: [
             Icon(Icons.payment, size: 20, color: Colors.blue[700]),
             const SizedBox(width: 12),
-            Expanded(child: Text(name, style: const TextStyle(fontSize: 13))),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(name, style: const TextStyle(fontSize: 13)),
+                  if (isSelected && accountInfo != null) ...[
+                    const SizedBox(height: 4),
+                    Text(
+                      accountInfo,
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
             Container(
               width: 20,
               height: 20,
@@ -613,25 +719,40 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         selectedEWallet == null) {
                       message = '⚠️ Pilih e-wallet yang akan digunakan!';
                     } else {
-                      // Validasi berhasil, navigate ke success screen
-                      String paymentMethod = '';
+                      // Validasi berhasil, navigate ke payment screen
+                      Map<String, String>? accountInfo;
+
                       if (selectedPayment == 'bank_transfer') {
-                        paymentMethod = bankTransferOptions.firstWhere(
+                        accountInfo = bankTransferOptions.firstWhere(
                           (e) => e['id'] == selectedBankTransfer,
-                        )['name']!;
+                        );
                       } else if (selectedPayment == 'e_wallet') {
-                        paymentMethod = eWalletOptions.firstWhere(
+                        accountInfo = eWalletOptions.firstWhere(
                           (e) => e['id'] == selectedEWallet,
-                        )['name']!;
-                      } else {
-                        paymentMethod = 'COD (Cash on Delivery)';
+                        );
                       }
 
-                      // Navigate to success screen
+                      // Get selected shipping option
+                      Map<String, dynamic>? shippingOption;
+                      if (selectedShipping != null) {
+                        shippingOption = shippingOptions.firstWhere(
+                          (option) => option['id'] == selectedShipping,
+                        );
+                      }
+
+                      // Navigate to payment screen
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const PaymentSuccessScreen(),
+                          builder: (context) => PaymentScreen(
+                            paymentMethod: selectedPayment,
+                            selectedBank: selectedBankTransfer,
+                            selectedEWallet: selectedEWallet,
+                            totalAmount: getTotalPrice(),
+                            accountInfo: accountInfo,
+                            cartItems: widget.selectedItems,
+                            shippingOption: shippingOption,
+                          ),
                         ),
                       );
                       return; // Exit early to skip showing snackbar
@@ -671,5 +792,167 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   String _formatPrice(double price) {
     return price.toStringAsFixed(0).replaceAllMapped(
         RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.');
+  }
+
+  void _showShippingOptionsDialog() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return Container(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Pilih Opsi Pengiriman',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  ...shippingOptions.map((option) {
+                    final isSelected = selectedShipping == option['id'];
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedShipping = option['id'] as String;
+                        });
+                        setModalState(() {});
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 12),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: isSelected ? Colors.blue : Colors.grey[300]!,
+                            width: isSelected ? 2 : 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                          color: isSelected ? Colors.blue[50] : Colors.white,
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.local_shipping_outlined,
+                              color:
+                                  isSelected ? Colors.blue : Colors.grey[600],
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    option['name'] as String,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: isSelected
+                                          ? Colors.blue
+                                          : Colors.black,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    option['description'] as String,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              'Rp.${_formatPrice(option['cost'] as double)}',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: isSelected ? Colors.blue : Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.pop(context),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        'Pilih',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _showMessageDialog() {
+    final TextEditingController messageController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Pesan untuk Penjual'),
+          content: TextField(
+            controller: messageController,
+            maxLines: 3,
+            decoration: const InputDecoration(
+              hintText: 'Tulis pesan Anda...',
+              border: OutlineInputBorder(),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Batal'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // TODO: Save message
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Pesan berhasil ditambahkan'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+              ),
+              child: const Text('Simpan'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

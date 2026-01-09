@@ -20,7 +20,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.chair_outlined, size: 90, color: Color.fromARGB(255, 66, 159, 247)),
+              const Icon(Icons.chair_outlined,
+                  size: 90, color: Color.fromARGB(255, 66, 159, 247)),
               const SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 30),
@@ -66,7 +67,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 70, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -98,6 +100,49 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // 🔹 Divider
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50),
+                child: Row(
+                  children: [
+                    Expanded(child: Divider(color: Colors.black26)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        'atau',
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                    ),
+                    Expanded(child: Divider(color: Colors.black26)),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // 🔹 Tombol Login Admin
+              OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/admin_login');
+                },
+                icon: const Icon(Icons.admin_panel_settings, size: 20),
+                label: const Text(
+                  'Masuk sebagai Admin',
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                ),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.blue,
+                  side: const BorderSide(color: Colors.blue, width: 2),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
               ),
